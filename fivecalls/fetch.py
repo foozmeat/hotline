@@ -1,5 +1,7 @@
 import json
 import sys
+from pathlib import Path
+
 import requests
 
 try:
@@ -16,8 +18,26 @@ except requests.exceptions.RequestException:
 
 data = response.json()
 
-with open('/tmp/fivecalls.json', 'w') as fp:
+with open('data/fivecalls.json', 'w') as fp:
     json.dump(data, fp)
+
+for i in data['issues']:
+    for contact in i['contacts']:
+        id = contact['id']
+        path = f'data/images/{id}'
+
+        if not Path(path).exists() and contact['photoURL']:
+
+            try:
+                response = requests.get(contact['photoURL'])
+
+            except requests.exceptions.RequestException:
+                print('HTTP Request failed')
+                sys.exit(1)
+            else:
+                if response.ok:
+                    with open(path, 'wb') as f:
+                        f.write(response.content)
 
 # issues = []
 # active_issues = []
