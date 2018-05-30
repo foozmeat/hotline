@@ -16,7 +16,7 @@ class TopIssueList(App):
         layout = BoxLayout(orientation='vertical')
 
         top_label = Label(text='Top Issues')
-        top_label.font_size = 20.0 * kc.scale
+        top_label.font_size = kc.font_size
 
         layout.add_widget(top_label)
 
@@ -26,9 +26,10 @@ class TopIssueList(App):
         for i in data['issues']:
             if not i['inactive']:
                 btn = Button(text=i['name'])
-                btn.font_size = 20.0 * kc.scale
+                btn.font_size = kc.font_size
                 btn.text_size = (kc.width, None)
                 btn.halign = 'center'
+                # btn.size_hint_y = None
                 layout.add_widget(btn)
 
         return layout

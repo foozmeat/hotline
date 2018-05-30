@@ -2,6 +2,7 @@ import platform
 import subprocess
 
 from kivy.config import Config
+
 from fivecalls.singleton import Singleton
 
 
@@ -27,6 +28,7 @@ class KivyConfig(metaclass=Singleton):
         self.padding = 20
         self.width = (480 * self.scale) - self.padding
         self.height = (800 * self.scale) - self.padding
+        self.font_size = 15 * self.scale
 
 
 if __name__ == '__main__':
@@ -35,4 +37,4 @@ if __name__ == '__main__':
 
     kc2 = KivyConfig()
 
-    assert(id(kc) == id(kc2))
+    assert (id(kc) == id(kc2))
