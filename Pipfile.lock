@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "77b34bf5bf31b9b76f7c0534277fbd1c91216f37a880bdf99fc16f506a8a6b6e"
+            "sha256": "9aa89c4582fc6740239e5b8c708c97355365a6464da9836edbb8e733e2730a78"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -16,9 +16,6 @@
         ]
     },
     "default": {
-        "21dedcd": {
-            "file": "https://github.com/pygame/pygame/archive/master.zip"
-        },
         "certifi": {
             "hashes": [
                 "sha256:13e698f54293db9f89122b0581843a782ad0934a4fe0172d2a980ba77fc61bb7",
@@ -78,7 +75,7 @@
         },
         "kivy": {
             "git": "https://github.com/kivy/kivy.git",
-            "ref": "master"
+            "ref": "1.10.0"
         },
         "requests": {
             "hashes": [

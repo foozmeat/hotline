@@ -5,9 +5,8 @@ name = "pypi"
 
 [packages]
 requests = "*"
-"21dedcd" = {file = "https://github.com/pygame/pygame/archive/master.zip"}
 cython = "==0.28.2"
-kivy = {git = "https://github.com/kivy/kivy.git", ref = "master"}
+kivy = {git = "https://github.com/kivy/kivy.git", ref = "1.10.0"}
 
 [dev-packages]
 mypy = "*"
