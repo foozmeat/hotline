@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 requests = "*"
 cython = "==0.28.2"
-kivy = {git = "https://github.com/kivy/kivy.git", ref = "1.10.0"}
+kivy = {git = "https://github.com/kivy/kivy.git", ref = "1.10.1"}
 
 [dev-packages]
 mypy = "*"
