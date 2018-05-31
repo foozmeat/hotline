@@ -6,13 +6,14 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 
 from fivecalls.config import KivyConfig
-from fivecalls.data import JSON_PATH
+from fivecalls.data import JSON_PATH, FiveCallsData
 
 
 class TopIssueList(App):
 
     def build(self):
         kc = KivyConfig()
+        fcd = FiveCallsData()
 
         layout = BoxLayout(orientation='vertical')
 
@@ -21,12 +22,9 @@ class TopIssueList(App):
 
         layout.add_widget(top_label)
 
-        with open(JSON_PATH, 'r') as fp:
-            data = json.load(fp)
-
-        for i in data['issues']:
-            if not i['inactive']:
-                btn = Button(text=i['name'])
+        for i in fcd.issues:
+            if not i.inactive:
+                btn = Button(text=i.name)
                 btn.font_size = kc.font_size
                 btn.text_size = (kc.width, None)
                 btn.halign = 'center'
