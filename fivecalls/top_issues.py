@@ -6,6 +6,7 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 
 from fivecalls.config import KivyConfig
+from fivecalls.data import JSON_PATH
 
 
 class TopIssueList(App):
@@ -20,7 +21,7 @@ class TopIssueList(App):
 
         layout.add_widget(top_label)
 
-        with open('/tmp/fivecalls.json', 'r') as fp:
+        with open(JSON_PATH, 'r') as fp:
             data = json.load(fp)
 
         for i in data['issues']:
