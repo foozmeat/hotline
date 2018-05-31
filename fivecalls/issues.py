@@ -1,12 +1,24 @@
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.screenmanager import Screen
+from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.scrollview import ScrollView
 
 from fivecalls.config import KivyConfig
-from fivecalls.controls import FCListButton, FCListLabel
+from fivecalls.controls import FCListButton, FCListLabel, FCIssueButton
 from fivecalls.data import FiveCallsData
+from fivecalls.issue_view import IssueView
 
-ISSUES_SCREEN = 'Top Issues'
+ISSUES_SCREEN = 'Issues'
+
+
+def button_callback(instance: FCIssueButton):
+
+    root = instance.get_root_window().children[0]  # type: ScreenManager
+
+    # Build an IssueView on the fly and add it to the screen manager.
+    iv = IssueView(issue=instance.issue)
+
+    root.add_widget(iv)
+    root.current = root.next()
 
 
 class IssueList(Screen):
