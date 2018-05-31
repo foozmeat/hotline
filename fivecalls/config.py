@@ -17,16 +17,21 @@ class KivyConfig(metaclass=Singleton):
             Config.set('input', 'pitft', 'mtdev,/dev/input/event2,rotation=270')
 
         self.padding = 20
-        self.width = (480 * self.scale) - self.padding
-        self.height = (800 * self.scale) - self.padding
+        self.width = (480 * self.scale)
+        self.height = (800 * self.scale)
         self.font_size = (20, 'sp')
 
         print(f"display scale: {self.scale}")
 
+    def set_font_size_in_pixels(self, size):
+
+        sp = size / self.scale
+
+        self.font_size = (sp, 'sp')
+        print(f"Font size changed to {self.font_size}")
+
 
 if __name__ == '__main__':
     kc = KivyConfig()
-
     kc2 = KivyConfig()
-
     assert (id(kc) == id(kc2))

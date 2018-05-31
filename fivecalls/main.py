@@ -2,7 +2,8 @@ from kivy import Config
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager
 
-from fivecalls.welcome import WelcomeScreen
+from fivecalls.issues import IssueList, ISSUES_SCREEN
+from fivecalls.welcome import WelcomeScreen, WELCOME_SCREEN
 
 
 class FiveCallsApp(App):
@@ -11,7 +12,8 @@ class FiveCallsApp(App):
     def build(self):
 
         fc_screen = ScreenManager()
-        fc_screen.add_widget(WelcomeScreen(name='Welcome Screen'))
+        fc_screen.add_widget(WelcomeScreen(name=WELCOME_SCREEN))
+        fc_screen.add_widget(IssueList(name=ISSUES_SCREEN))
 
         return fc_screen
 
