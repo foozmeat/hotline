@@ -21,7 +21,7 @@ class KivyConfig(metaclass=Singleton):
         self.height = (800 * self.scale)
         self.font_size = (20, 'sp')
 
-        print(f"display scale: {self.scale}")
+        # print(f"display scale: {self.scale}")
 
     def set_font_size_in_pixels(self, size):
 
