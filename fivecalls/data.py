@@ -49,8 +49,8 @@ class Issue(FiveCallsModel):
 #         self.issues: [Issue] = []
 #
 #         super().__init__(**kwargs)
-#
-#
+
+
 # class Contact(FiveCallsModel):
 #
 #     def __init__(self, **kwargs):
@@ -91,8 +91,6 @@ class FiveCallsData(metaclass=Singleton):
         for i in self._data['issues']:
             new_issue = Issue(**i)
 
-            self.issues.append(new_issue)
-
             if not new_issue.inactive:
                 self.active_issues.append(new_issue)
 
@@ -107,6 +105,8 @@ class FiveCallsData(metaclass=Singleton):
 
             for c in i['contacts']:
                 self.contacts[c['id']] = c
+
+            self.issues.append(new_issue)
 
 
 if __name__ == '__main__':

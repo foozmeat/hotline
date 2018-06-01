@@ -40,12 +40,11 @@ class IssueList(Screen):
 
         self.layout.add_widget(top_label)
 
-        for i in fcd.issues:
-            if not i.inactive:
-                btn = FCIssueButton(text=i.name, issue=i)
-                btn.bind(on_press=button_callback)
+        for i in fcd.active_issues:
+            btn = FCIssueButton(text=i.name, issue=i)
+            btn.bind(on_press=button_callback)
 
-                self.layout.add_widget(btn)
+            self.layout.add_widget(btn)
 
         for cat in fcd.categories:
             cat_label = FCListLabel(text=cat, bold=True)

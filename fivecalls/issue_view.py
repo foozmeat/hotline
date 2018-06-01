@@ -3,12 +3,13 @@ from kivy.uix.screenmanager import Screen
 from kivy.uix.scrollview import ScrollView
 
 from fivecalls.config import KivyConfig
-from fivecalls.controls import FCListLabel, FCTextLabel
+from fivecalls.controls import FCListLabel, FCTextLabel, FCContactLayout
+from fivecalls.data import Issue
 
 
 class IssueView(Screen):
 
-    def __init__(self, issue=None, **kwargs):
+    def __init__(self, issue: Issue = None, **kwargs):
         super().__init__(**kwargs)
 
         self.issue = issue
@@ -21,12 +22,28 @@ class IssueView(Screen):
         )
         self.layout.bind(minimum_height=self.layout.setter('height'))
 
-        name_label = FCListLabel(text=issue.name, bold=True)
+        name_label = FCListLabel(
+                text=issue.name,
+                bold=True,
+                padding=('20sp', '30sp')
+        )
+
         self.layout.add_widget(name_label)
 
-        reason_label = FCTextLabel(text=issue.reason)
+        # reason_label = FCTextLabel(text=issue.reason)
+        # self.layout.add_widget(reason_label)
 
-        self.layout.add_widget(reason_label)
+        call_label = FCListLabel(
+                text="Call your representatives",
+                bold=True,
+                padding=('20sp', '30sp'),
+                halign="center"
+        )
+        self.layout.add_widget(call_label)
+
+        for c in self.issue.contacts:
+            c_button = FCContactLayout(contact=c)
+            self.layout.add_widget(c_button)
 
         self.scrollview = ScrollView(
                 do_scroll_x=False,
@@ -35,7 +52,6 @@ class IssueView(Screen):
         self.add_widget(self.scrollview)
 
     def on_pre_enter(self, *args):
-
         super().on_enter(*args)
 
         for c in self.layout.children:
