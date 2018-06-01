@@ -55,7 +55,9 @@ class IssueList(Screen):
 
             for i in issues:
                 if i.inactive:
-                    btn = FCListButton(text=i.name)
+                    btn = FCIssueButton(text=i.name, issue=i)
+                    btn.bind(on_press=button_callback)
+
                     self.layout.add_widget(btn)
 
         self.scrollview = ScrollView(
