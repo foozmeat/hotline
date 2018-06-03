@@ -1,3 +1,4 @@
+import os
 import platform
 import subprocess
 
@@ -19,7 +20,8 @@ class KivyConfig(metaclass=Singleton):
         self.padding = 20
         self.width = (480 * self.scale)
         self.height = (800 * self.scale)
-        self.font_size = (20, 'sp')
+        self.font_size = (30, 'sp')
+        self.debug = os.getenv('DEBUG', False)
 
         # print(f"display scale: {self.scale}")
 

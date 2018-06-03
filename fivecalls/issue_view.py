@@ -17,8 +17,9 @@ class IssueView(Screen):
 
         self.layout = BoxLayout(
                 orientation='vertical',
-                padding=(10, 10),
+                # padding=(10, 10),
                 size_hint_y=None,
+                spacing=10,
         )
         self.layout.bind(minimum_height=self.layout.setter('height'))
 
@@ -30,8 +31,8 @@ class IssueView(Screen):
 
         self.layout.add_widget(name_label)
 
-        # reason_label = FCTextLabel(text=issue.reason)
-        # self.layout.add_widget(reason_label)
+        reason_label = FCTextLabel(text=issue.reason)
+        self.layout.add_widget(reason_label)
 
         call_label = FCListLabel(
                 text="Call your representatives",
