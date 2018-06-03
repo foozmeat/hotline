@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "9aa89c4582fc6740239e5b8c708c97355365a6464da9836edbb8e733e2730a78"
+            "sha256": "8dda60b1edc979205198d55d9c4816c6d8610f4c8e29ad6db96e5d74c462451d"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -32,39 +32,40 @@
         },
         "cython": {
             "hashes": [
-                "sha256:03db8c1b8120039f72493b95494a595be13b01b6860cfc93e2a651a001847b3b",
-                "sha256:0d2ccb812d73e67557fd16e7aa7bc5bac18933c1dfe306133cd0680ccab89f33",
-                "sha256:24f8ea864de733f5a447896cbeec2cac212247e33272539670b9f466f43f23db",
-                "sha256:30a8fd029eb932a7b5a74e158316d1d069ccb67a8607aa7b6c4ed19fab7fbd4a",
-                "sha256:37e680901e6a4b97ab67717f9b43fc58542cd10a77431efd2d8801d21d5a37d4",
-                "sha256:4984e097bc9da37862d97c1f66dacf2c80fadaea488d96ba0b5ea9d84dbc7521",
-                "sha256:4cfda677227af41e4502e088ee9875e71922238a207d0c40785a0fb09c703c21",
-                "sha256:4ec60a4086a175a81b9258f810440a6dd2671aa4b419d8248546d85a7de6a93f",
-                "sha256:51c7d48ea4cba532d11a6d128ebbc15373013f816e5d1c3a3946650b582a30b8",
-                "sha256:634e2f10fc8d026c633cffacb45cd8f4582149fa68e1428124e762dbc566e68a",
-                "sha256:67e0359709c8addc3ecb19e1dec6d84d67647e3906da618b953001f6d4480275",
-                "sha256:6a93d4ba0461edc7a359241f4ebbaa8f9bc9490b3540a8dd0460bef8c2c706db",
-                "sha256:6ba89d56c3ee45716378cda4f0490c3abe1edf79dce8b997f31608b14748a52b",
-                "sha256:6ca5436d470584ba6fd399a802c9d0bcf76cf1edb0123725a4de2f0048f9fa07",
-                "sha256:7656895cdd59d56dd4ed326d1ee9ede727020d4a5d8778a05af2d8e25af4b13d",
-                "sha256:85f7432776870d65639fed00f951a3c05ef1e534bc72a73cd1200d79b9a7d7d0",
-                "sha256:96dd674e72281d3feed74fd5adcf0514ba02884f123cdf4fb78567e7be6b1694",
-                "sha256:97bf06a89bcf9e8d7633cde89274d42b3b661dc974b58fca066fad762e46b4d8",
-                "sha256:9a465e7296a4629139be5d2015577f2ae5e08196eb7dc4c407beea130f362dc3",
-                "sha256:9a60355edca1cc9006be086e2633e190542aad2bf9e46948792a48b3ae28ed97",
-                "sha256:9eab3696f2cb88167db109d737c787fb9dd34ca414bd1e0c424e307956e02c94",
-                "sha256:c3ae7d40ebceb0d944dfeeceaf1fbf17e528f5327d97b008a8623ddddd1ecee3",
-                "sha256:c623d19fcc60ea27882f20cf484218926ddf6f978b958dae1070600a1974f809",
-                "sha256:c719a6e86d7c737afcc9729994f76b284d1c512099ee803eff11c2a9e6e33a42",
-                "sha256:cf17af0433218a1e33dc6f3069dd9e7cd0c80fe505972c3acd548e25f67973fd",
-                "sha256:daf96e0d232605e979995795f62ffd24c5c6ecea4526e4cbb86d80f01da954b2",
-                "sha256:db40de7d03842d3c4625028a74189ade52b27f8efaeb0d2ca06474f57e0813b2",
-                "sha256:deea1ef59445568dd7738fa3913aea7747e4927ff4ae3c10737844b8a5dd3e22",
-                "sha256:e05d28b5ce1ee5939d83e50344980659688ecaed65c5e10214d817ecf5d1fe6a",
-                "sha256:f5f6694ce668eb7a9b59550bfe4265258809c9b0665c206b26d697df2eef2a8b"
+                "sha256:12efb3c1b221a99a9bfac206cd687f4ba3a0dd8f186cbf64785cef6517fd3147",
+                "sha256:16210e8b3e64b3d6b27ce4f0d53e78640e91a5e0a8d1d739adbf75b5eb698871",
+                "sha256:185cf9b99164d1afce462c685f0edde99015d909e15763494dffe2b47fd4cbcb",
+                "sha256:1f4b1408bd2c5c24ac6313c82843313c677072f0dea0c041019669a10b194ca3",
+                "sha256:25f7ac45b8bf06739ecd22186c5405e62832564586dfc33fc620e35477c29d2c",
+                "sha256:308896331c85547b4bf3da940000dbc03e6a28ef38a292508c57414701839601",
+                "sha256:335d5afed98960937257b0b113e5898060cc3e79ed7c28adfb289d55ca0eb017",
+                "sha256:43a9eafa95b021229550b70de6bfc3cce2e198513dcc8ffd55f4916b50d25aea",
+                "sha256:475fd6ca6e59a64442fe0926a82eaaeb8474f8eb0dca0f3fc09f8e4f7ef26b5f",
+                "sha256:4983354d35f14decdf9bea85e54e5dcaa06967a3b016cac3ea2c9d4d2cbc4146",
+                "sha256:50edcb346e6d4f4b4881d3c473cb804ea7b9fe910f9f6308cf89b684eae8fc64",
+                "sha256:51b3dd45cd311fd05bab71c114349c329fceb21d47481440d534d9e02d2e9167",
+                "sha256:61731d93af1388b5adb1ea9fe485aba62331e7c387e1f3d67639d0649a378c70",
+                "sha256:6464f875934483fc7be1dc6663a191ba306a2c3d4041f555be917f83b1b7009e",
+                "sha256:6c008b7eda7da74bd222d88923e9381f25cd235958333a6da454f60ced634a6f",
+                "sha256:6f30bd0c9a1b1fe2ef38d530431d0efbd46bfb3ea681c7c14ab8054c571c9ab7",
+                "sha256:87c2d19ff56276ba67083e2466516c4b8a787ab15d5562dadc57f43fa2f4c547",
+                "sha256:8c42126986cdc0186139487f97bcaa0835634ebe4ea64a548c9591751a508148",
+                "sha256:9ab170d1ab65b6e58cddefe2d3d4545891d99a9ec58f2d9ff2054bba5cf1e7b4",
+                "sha256:a4d7cac05f411e71b6b6e812f781da20665add998b0a9a3ed98ef1b66e3f0b79",
+                "sha256:b1c8f489e5ce9c961bff89f8d3e84e8f4da366e0c7aae81f46ec6401446ef8ff",
+                "sha256:cf6ce3f98b90817c53014ded2d1792cabfcf8a042aa4c0e6088598acc3141790",
+                "sha256:d65b60db3f7e57e0c2afcbb0e94845cf8a10fdd2920f37cbd032f24040d7ae02",
+                "sha256:d6b7863c59dd9e149a2b3583d47990834c9d36be153735d43997d0ff1e80d89c",
+                "sha256:d85417af8bf6add9f1f41b5918acf9da2701e252234092a6dbec6c6a2236341d",
+                "sha256:e2928580127a43a616565aeb354a6cdcf8ae72829852d2298c517dfc322e7347",
+                "sha256:f01e03638423dcd1555f5fccc67a9adce4aec99e645eee01f43ea091c5844053",
+                "sha256:f141d1f9c27a07b5a93f7dc5339472067e2d7140d1c5a9e20112a5665ca60306"
             ],
             "index": "pypi",
-            "version": "==0.28.2"
+            "version": "==0.25.2"
+        },
+        "d4a76af": {
+            "file": "https://github.com/kivy/kivy/archive/master.zip"
         },
         "idna": {
             "hashes": [
@@ -72,10 +73,6 @@
                 "sha256:8c7309c718f94b3a625cb648ace320157ad16ff131ae0af362c9f21b80ef6ec4"
             ],
             "version": "==2.6"
-        },
-        "kivy": {
-            "git": "https://github.com/kivy/kivy.git",
-            "ref": "1.10.0"
         },
         "requests": {
             "hashes": [
