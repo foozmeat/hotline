@@ -14,6 +14,7 @@ def button_callback(instance: FCListButton):
     # kc.set_font_size_in_pixels(instance.font_size)
 
     root = instance.get_root_window().children[0]  # type: ScreenManager
+    root.transition.direction = 'left'
     root.current = ISSUES_SCREEN
 
 

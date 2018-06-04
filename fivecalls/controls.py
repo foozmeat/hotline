@@ -2,8 +2,10 @@ from kivy.graphics.texture import Texture
 from kivy.graphics.vertex_instructions import Rectangle
 from kivy.metrics import sp
 from kivy.properties import StringProperty
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
+from kivy.uix.screenmanager import ScreenManager
 
 from fivecalls.config import KivyConfig
 from fivecalls.data import IMAGE_PATH
@@ -27,6 +29,10 @@ def my_size_callback(obj, texture: Texture):
                 Rectangle(pos=obj.pos, size=obj.size)
 
 
+#
+# Labels
+#
+
 class FCBaseLabel(Label):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -40,6 +46,7 @@ class FCBaseLabel(Label):
 
 class FCListLabel(FCBaseLabel):
     """ For list headers """
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.padding = (sp(20), sp(30))
@@ -49,10 +56,15 @@ class FCListLabel(FCBaseLabel):
 
 class FCTextLabel(FCBaseLabel):
     """ For blocks of text """
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.padding = (sp(20), sp(20))
 
+
+#
+# Buttons
+#
 
 class FCListButton(Button):
 
@@ -76,6 +88,13 @@ class FCIssueButton(FCListButton):
         self.issue = issue
 
 
+class FCToolbarButton(FCListButton):
+    def __init__(self, issue=None, **kwargs):
+        super().__init__(**kwargs)
+
+        # self.padding = (sp(0), sp(0))
+
+
 class FCContactButton(Button):
     person_name = StringProperty()
     person_area = StringProperty()
@@ -92,3 +111,21 @@ class FCContactButton(Button):
         print(self.person_image)
         self.person_area = contact['area']
         self.person_reason = contact['reason']
+
+
+class FCToolbar(BoxLayout):
+
+    def back_callback(self):
+        root = self.get_root_window().children[0]  # type: ScreenManager
+        root.transition.direction = 'right'
+        prev = root.previous()
+        current = root.current
+
+        root.current = prev
+
+        if 'dynamic' in current:
+            screen = root.get_screen(current)
+            root.remove_widget(screen)
+
+
+

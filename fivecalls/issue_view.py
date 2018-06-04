@@ -5,10 +5,21 @@ from kivy.uix.screenmanager import Screen
 from kivy.uix.scrollview import ScrollView
 
 from fivecalls.config import KivyConfig
-from fivecalls.controls import FCListLabel, FCTextLabel, FCContactButton
+from fivecalls.controls import FCListLabel, FCTextLabel, FCContactButton, FCToolbar
 from fivecalls.data import Issue
 
 Builder.load_file('fivecalls/templates/contact_button.kv')
+# Builder.load_file('fivecalls/templates/toolbar.kv')
+
+
+def button_callback(instance: FCContactButton):
+    root = instance.get_root_window().children[0]  # type: ScreenManager
+    root.transition.direction = 'left'
+
+    iv = IssueView(issue=instance.issue)
+
+    root.add_widget(iv)
+    root.current = root.next()
 
 
 class IssueView(Screen):
@@ -26,12 +37,14 @@ class IssueView(Screen):
         )
         self.layout.bind(minimum_height=self.layout.setter('height'))
 
+        self.layout.add_widget(FCToolbar())
+
         name_label = FCListLabel(text=issue.name)
 
         self.layout.add_widget(name_label)
 
-        reason_label = FCTextLabel(text=issue.reason)
-        self.layout.add_widget(reason_label)
+        # reason_label = FCTextLabel(text=issue.reason)
+        # self.layout.add_widget(reason_label)
 
         call_label = FCListLabel(text="Call your representatives")
 
@@ -46,4 +59,3 @@ class IssueView(Screen):
         )
         self.scrollview.add_widget(self.layout)
         self.add_widget(self.scrollview)
-

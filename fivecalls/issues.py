@@ -1,21 +1,27 @@
+from kivy.lang import Builder
+from kivy.metrics import sp
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.scrollview import ScrollView
 
 from fivecalls.config import KivyConfig
-from fivecalls.controls import FCListButton, FCListLabel, FCIssueButton
+from fivecalls.controls import FCListButton, FCListLabel, FCIssueButton, FCToolbar
 from fivecalls.data import FiveCallsData
 from fivecalls.issue_view import IssueView
 
 ISSUES_SCREEN = 'Issues'
 
+Builder.load_file('fivecalls/templates/toolbar.kv')
+
 
 def button_callback(instance: FCIssueButton):
 
     root = instance.get_root_window().children[0]  # type: ScreenManager
+    root.transition.direction = 'left'
 
     # Build an IssueView on the fly and add it to the screen manager.
     iv = IssueView(issue=instance.issue)
+    iv.name = f"dynamic_issue_view"
 
     root.add_widget(iv)
     root.current = root.next()
@@ -31,13 +37,13 @@ class IssueList(Screen):
 
         self.layout = BoxLayout(
                 orientation='vertical',
-                padding=(10, 10),
                 size_hint_y=None,
         )
         self.layout.bind(minimum_height=self.layout.setter('height'))
 
-        top_label = FCListLabel(text='Top Issues', bold=True)
+        self.layout.add_widget(FCToolbar())
 
+        top_label = FCListLabel(text='Top Issues', bold=True)
         self.layout.add_widget(top_label)
 
         for i in fcd.active_issues:

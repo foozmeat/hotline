@@ -12,7 +12,7 @@ class FiveCallsApp(App):
     def build(self):
 
         fc_screen = ScreenManager()
-        # fc_screen.add_widget(WelcomeScreen(name=WELCOME_SCREEN))
+        fc_screen.add_widget(WelcomeScreen(name=WELCOME_SCREEN))
         fc_screen.add_widget(IssueList(name=ISSUES_SCREEN))
 
         return fc_screen
