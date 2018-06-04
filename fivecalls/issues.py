@@ -65,10 +65,10 @@ class IssueList(Screen):
         self.scrollview.add_widget(self.layout)
         self.add_widget(self.scrollview)
 
-    def on_pre_enter(self, *args):
-
-        super().on_enter(*args)
-
-        for c in self.layout.children:
-            c.font_size = self.kc.font_size
-            c.text_size = (self.kc.width, None)
+    # def on_pre_enter(self, *args):
+    #
+    #     super().on_enter(*args)
+    #
+    #     for c in self.layout.children:
+    #         c.font_size = self.kc.font_size
+    #         c.text_size = (self.kc.width, None)

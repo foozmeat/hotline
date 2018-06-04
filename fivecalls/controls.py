@@ -1,5 +1,6 @@
 from kivy.graphics.texture import Texture
 from kivy.graphics.vertex_instructions import Rectangle
+from kivy.metrics import sp
 from kivy.properties import StringProperty
 from kivy.uix.button import Button
 from kivy.uix.label import Label
@@ -26,6 +27,33 @@ def my_size_callback(obj, texture: Texture):
                 Rectangle(pos=obj.pos, size=obj.size)
 
 
+class FCBaseLabel(Label):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.kc = KivyConfig()
+        self.font_size = self.kc.font_size
+        self.text_size = (self.kc.width, None)
+        self.size_hint_y = None
+        self.bind(texture=my_height_callback)
+
+
+class FCListLabel(FCBaseLabel):
+    """ For list headers """
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.padding = (sp(20), sp(30))
+        self.bold = True
+        self.halign = 'center'
+
+
+class FCTextLabel(FCBaseLabel):
+    """ For blocks of text """
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.padding = (sp(20), sp(20))
+
+
 class FCListButton(Button):
 
     def __init__(self, **kwargs):
@@ -33,30 +61,9 @@ class FCListButton(Button):
         self.kc = KivyConfig()
         self.font_size = self.kc.font_size
         self.text_size = (self.kc.width, None)
-        self.size_hint = (1, None)
-        self.halign = 'center'
-        self.padding = ('20sp', '20sp')
-
-        self.bind(texture=my_height_callback)
-
-
-class FCListLabel(Label):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
         self.size_hint_y = None
         self.halign = 'center'
-        self.padding = ('20sp', '20sp')
-
-        self.bind(texture=my_height_callback)
-
-
-class FCTextLabel(Label):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-        self.size_hint_y = None
-        self.padding = ('20sp', '20sp')
+        self.padding = (sp(20), sp(20))
 
         self.bind(texture=my_height_callback)
 
@@ -67,16 +74,6 @@ class FCIssueButton(FCListButton):
         super().__init__(**kwargs)
 
         self.issue = issue
-
-
-class FCContactLabel(Label):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.kc = KivyConfig()
-
-        self.size_hint = (None, None)
-        self.bind(texture=my_size_callback)
-        self.font_size = self.kc.font_size
 
 
 class FCContactButton(Button):
@@ -90,6 +87,7 @@ class FCContactButton(Button):
         self.kc = KivyConfig()
 
         self.person_name = contact['name']
-        self.person_image = IMAGE_PATH + contact['id']
+        self.person_image = IMAGE_PATH + contact['id'] + '.jpg'
+        print(self.person_image)
         self.person_area = contact['area']
 

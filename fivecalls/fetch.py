@@ -26,7 +26,7 @@ def fetch() -> bool:
 
     for i in data['issues']:
         for contact in i['contacts']:
-            path = IMAGE_PATH + contact['id']
+            path = IMAGE_PATH + contact['id'] + '.jpg'
 
             if not Path(path).exists() and contact['photoURL']:
 

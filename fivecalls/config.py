@@ -2,7 +2,7 @@ import os
 import platform
 
 from kivy.config import Config
-from kivy.metrics import MetricsBase
+from kivy.metrics import MetricsBase, sp
 
 from fivecalls.singleton import Singleton
 
@@ -19,16 +19,14 @@ class KivyConfig(metaclass=Singleton):
         self.padding = 20
         self.width = (480 * self.scale)
         self.height = (800 * self.scale)
-        self.font_size = (30, 'sp')
+        self.font_size = sp(30)
         self.debug = os.getenv('DEBUG', False)
 
         # print(f"display scale: {self.scale}")
 
     def set_font_size_in_pixels(self, size):
 
-        sp = size / self.scale
-
-        self.font_size = (sp, 'sp')
+        self.font_size = sp(size / self.scale)
         print(f"Font size changed to {self.font_size}")
 
 
