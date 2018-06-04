@@ -9,7 +9,7 @@ from kivy.uix.relativelayout import RelativeLayout
 
 from fivecalls.config import KivyConfig
 from fivecalls.data import IMAGE_PATH
-from fivecalls.helpers import in_sps
+from fivecalls.helpers import in_sps, random_color
 
 
 def my_height_callback(obj, texture: Texture):
@@ -25,7 +25,7 @@ def my_size_callback(obj, texture: Texture):
 
     if kc.debug:
         with obj.canvas:
-            Color(0, 1, 0, 0.5)
+            random_color()
             Rectangle(pos=obj.pos, size=obj.size)
 
 
@@ -90,7 +90,7 @@ class FCContactLayout(RelativeLayout):
 
         if self.kc.debug:
             with self.canvas:
-                Color(1, 0, 0, 1)
+                random_color()
                 Rectangle(size=self.size)
 
         # Contact Image
