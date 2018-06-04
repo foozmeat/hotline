@@ -80,6 +80,7 @@ class FCContactButton(Button):
     person_name = StringProperty()
     person_area = StringProperty()
     person_image = StringProperty()
+    person_reason = StringProperty()
 
     def __init__(self, contact: dict = None, **kwargs):
         super().__init__(**kwargs)
@@ -90,4 +91,4 @@ class FCContactButton(Button):
         self.person_image = IMAGE_PATH + contact['id'] + '.jpg'
         print(self.person_image)
         self.person_area = contact['area']
-
+        self.person_reason = contact['reason']
