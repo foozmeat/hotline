@@ -1,6 +1,5 @@
 import os
 import platform
-import subprocess
 
 from kivy.config import Config
 from kivy.metrics import MetricsBase

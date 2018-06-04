@@ -3,7 +3,7 @@ from kivy.uix.screenmanager import Screen
 from kivy.uix.scrollview import ScrollView
 
 from fivecalls.config import KivyConfig
-from fivecalls.controls import FCListLabel, FCTextLabel, FCContactLayout
+from fivecalls.controls import FCListLabel, FCTextLabel, FCContactLayout, FCContactButton
 from fivecalls.data import Issue
 
 
@@ -31,8 +31,8 @@ class IssueView(Screen):
 
         self.layout.add_widget(name_label)
 
-        reason_label = FCTextLabel(text=issue.reason)
-        self.layout.add_widget(reason_label)
+        # reason_label = FCTextLabel(text=issue.reason)
+        # self.layout.add_widget(reason_label)
 
         call_label = FCListLabel(
                 text="Call your representatives",
@@ -43,7 +43,7 @@ class IssueView(Screen):
         self.layout.add_widget(call_label)
 
         for c in self.issue.contacts:
-            c_button = FCContactLayout(contact=c)
+            c_button = FCContactButton(contact=c)
             self.layout.add_widget(c_button)
 
         self.scrollview = ScrollView(

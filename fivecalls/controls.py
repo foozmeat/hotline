@@ -1,11 +1,13 @@
 from kivy.graphics.context_instructions import Color
 from kivy.graphics.texture import Texture
 from kivy.graphics.vertex_instructions import Rectangle
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.image import Image
 from kivy.uix.label import Label
 from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.scrollview import ScrollView
 
 from fivecalls.config import KivyConfig
 from fivecalls.data import IMAGE_PATH
@@ -72,6 +74,16 @@ class FCIssueButton(FCListButton):
         self.issue = issue
 
 
+class FCContactLabel(Label):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.kc = KivyConfig()
+
+        self.size_hint = (None, None)
+        self.bind(texture=my_size_callback)
+        self.font_size = self.kc.font_size
+
+
 class FCContactLayout(RelativeLayout):
 
     def __init__(self, contact: dict = None, **kwargs):
@@ -101,21 +113,60 @@ class FCContactLayout(RelativeLayout):
         self.add_widget(c_img)
 
         # Contact Name
-
-        name_label = Label(text=self.contact['name'], bold=True)
-        name_label.bind(texture=my_size_callback)
-        name_label.font_size = self.kc.font_size
-        name_label.size_hint = (None, None)
-        name_label.pos = (in_sps(100), in_sps(ROW_HEIGHT / 2))
+        name_label = FCContactLabel(
+                text=self.contact['name'],
+                bold=True,
+                pos=(in_sps(100), in_sps(ROW_HEIGHT / 2))
+        )
 
         self.add_widget(name_label)
 
         # Area
-
-        area_label = Label(text=self.contact['area'])
-        area_label.bind(texture=my_size_callback)
-        area_label.font_size = self.kc.font_size
-        area_label.size_hint = (None, None)
-        area_label.pos = (in_sps(100), 20)
+        area_label = FCContactLabel(
+                text=self.contact['area'],
+                pos=(in_sps(100), 20)
+        )
 
         self.add_widget(area_label)
+
+
+class FCContactButton(Button):
+
+    def __init__(self, contact: dict = None, **kwargs):
+        super().__init__(**kwargs)
+
+        self.kc = KivyConfig()
+        self.contact = contact
+
+        ROW_HEIGHT = 100
+        X_PAD = 10
+        Y_PAD = 10
+        self.text = "Button"
+        self.size_hint = (None, None)
+        self.size = (self.kc.width, in_sps(ROW_HEIGHT))
+
+        self.layout = FloatLayout(
+        )
+        self.add_widget(self.layout)
+        self.layout.size = (self.kc.width, in_sps(ROW_HEIGHT))
+
+        if self.kc.debug:
+            with self.layout.canvas:
+                Color(1, 0, 0, 1)
+                Rectangle(size=self.size)
+
+        # Contact Image
+        # c_img = Image(source=IMAGE_PATH + self.contact['id'])
+        # c_img.size_hint = (None, None)
+        # c_img.height = in_sps(ROW_HEIGHT - (Y_PAD * 2))
+        # c_img.y = in_sps(200)
+        # self.add_widget(c_img)
+
+        # Contact Name
+        # name_label = FCContactLabel(
+        #         text=self.contact['name'],
+        #         bold=True,
+        #         pos=(in_sps(100), in_sps(ROW_HEIGHT / 2))
+        # )
+        # self.layout.add_widget(name_label)
+
