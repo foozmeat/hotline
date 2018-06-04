@@ -1,10 +1,13 @@
+from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import Screen
 from kivy.uix.scrollview import ScrollView
 
 from fivecalls.config import KivyConfig
-from fivecalls.controls import FCListLabel, FCTextLabel, FCContactLayout, FCContactButton
+from fivecalls.controls import FCListLabel, FCTextLabel, FCContactButton
 from fivecalls.data import Issue
+
+Builder.load_file('fivecalls/templates/contact_button.kv')
 
 
 class IssueView(Screen):
@@ -17,7 +20,6 @@ class IssueView(Screen):
 
         self.layout = BoxLayout(
                 orientation='vertical',
-                # padding=(10, 10),
                 size_hint_y=None,
                 spacing=10,
         )
@@ -31,8 +33,8 @@ class IssueView(Screen):
 
         self.layout.add_widget(name_label)
 
-        # reason_label = FCTextLabel(text=issue.reason)
-        # self.layout.add_widget(reason_label)
+        reason_label = FCTextLabel(text=issue.reason)
+        self.layout.add_widget(reason_label)
 
         call_label = FCListLabel(
                 text="Call your representatives",
@@ -41,6 +43,7 @@ class IssueView(Screen):
                 halign="center"
         )
         self.layout.add_widget(call_label)
+
 
         for c in self.issue.contacts:
             c_button = FCContactButton(contact=c)

@@ -1,0 +1,38 @@
+<FCContactButton>:
+    size_hint_y: None
+    height: sp(100)
+
+    RelativeLayout:
+
+        pos: self.parent.pos
+        size: self.parent.size
+
+        Label:
+
+            text: root.person_name
+            font_size: sp(20)
+            bold: True
+            pos: sp(100), sp(50)
+            size_hint: None, None
+            size: self.texture_size
+
+        Label:
+
+            text: root.person_area
+            font_size: sp(20)
+            pos: sp(100), sp(30)
+            size_hint: None, None
+            size: self.texture_size
+
+
+        Image:
+            source: root.person_image
+
+            size_hint_y: None
+            size_hint_x: None
+            height: self.parent.height - dp(20)
+            width: self.parent.height * self.image_ratio
+            y: dp(10)
+            allow_stretch: True
+            keep_ratio: True
+

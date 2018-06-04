@@ -2,7 +2,6 @@ from kivy import Config
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager
 
-from fivecalls.controls import FCContactLayout
 from fivecalls.data import FiveCallsData
 from fivecalls.issue_view import IssueView
 from fivecalls.issues import IssueList, ISSUES_SCREEN
