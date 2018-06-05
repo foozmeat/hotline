@@ -1,17 +1,15 @@
-from kivy.lang import Builder
-from kivy.metrics import sp
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.scrollview import ScrollView
 
 from fivecalls.config import KivyConfig
-from fivecalls.controls import FCListButton, FCListLabel, FCIssueButton, FCToolbar
+from fivecalls.controls import FCIssueButton, FCListLabel
+from fivecalls.toolbar import FCToolbar
 from fivecalls.data import FiveCallsData
 from fivecalls.issue_view import IssueView
 
 ISSUES_SCREEN = 'Issues'
 
-Builder.load_file('fivecalls/templates/toolbar.kv')
 
 
 def button_callback(instance: FCIssueButton):

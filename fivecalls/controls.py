@@ -2,10 +2,8 @@ from kivy.graphics.texture import Texture
 from kivy.graphics.vertex_instructions import Rectangle
 from kivy.metrics import sp
 from kivy.properties import StringProperty
-from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
-from kivy.uix.screenmanager import ScreenManager
 
 from fivecalls.config import KivyConfig
 from fivecalls.data import IMAGE_PATH
@@ -38,10 +36,14 @@ class FCBaseLabel(Label):
         super().__init__(**kwargs)
 
         self.kc = KivyConfig()
-        self.font_size = self.kc.font_size
+        self.font_size = sp(self.kc.font_size)
         self.text_size = (self.kc.width, None)
         self.size_hint_y = None
         self.bind(texture=my_height_callback)
+        self.kc.bind(font_size=self.update_font_size)
+
+    def update_font_size(self, obj, value):
+        self.font_size = sp(value)
 
 
 class FCListLabel(FCBaseLabel):
@@ -71,13 +73,17 @@ class FCListButton(Button):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.kc = KivyConfig()
-        self.font_size = self.kc.font_size
+        self.font_size = sp(self.kc.font_size)
         self.text_size = (self.kc.width, None)
         self.size_hint_y = None
         self.halign = 'center'
         self.padding = (sp(20), sp(20))
 
         self.bind(texture=my_height_callback)
+        self.kc.bind(font_size=self.update_font_size)
+
+    def update_font_size(self, obj, value):
+        self.font_size = sp(value)
 
 
 class FCIssueButton(FCListButton):
@@ -86,13 +92,6 @@ class FCIssueButton(FCListButton):
         super().__init__(**kwargs)
 
         self.issue = issue
-
-
-class FCToolbarButton(FCListButton):
-    def __init__(self, issue=None, **kwargs):
-        super().__init__(**kwargs)
-
-        # self.padding = (sp(0), sp(0))
 
 
 class FCContactButton(Button):
@@ -111,21 +110,5 @@ class FCContactButton(Button):
         print(self.person_image)
         self.person_area = contact['area']
         self.person_reason = contact['reason']
-
-
-class FCToolbar(BoxLayout):
-
-    def back_callback(self):
-        root = self.get_root_window().children[0]  # type: ScreenManager
-        root.transition.direction = 'right'
-        prev = root.previous()
-        current = root.current
-
-        root.current = prev
-
-        if 'dynamic' in current:
-            screen = root.get_screen(current)
-            root.remove_widget(screen)
-
 
 

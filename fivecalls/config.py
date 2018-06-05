@@ -2,32 +2,29 @@ import os
 import platform
 
 from kivy.config import Config
-from kivy.metrics import MetricsBase, sp
+from kivy.event import EventDispatcher
+from kivy.metrics import sp
+from kivy.properties import NumericProperty
 
 from fivecalls.singleton import Singleton
 
 
-class KivyConfig(metaclass=Singleton):
+class KivyConfig(EventDispatcher, metaclass=Singleton):
+    font_size = NumericProperty(20)
 
-    def __init__(self):
-        mb = MetricsBase()
-        self.scale = mb.density
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
         if platform.system() != 'Darwin':
             Config.set('input', 'pitft', 'mtdev,/dev/input/event2,rotation=270')
 
-        self.padding = 20
-        self.width = (480 * self.scale)
-        self.height = (800 * self.scale)
-        self.font_size = sp(30)
+        self.width = sp(480)
+        self.height = sp(800)
         self.debug = os.getenv('DEBUG', False)
 
-        # print(f"display scale: {self.scale}")
-
-    def set_font_size_in_pixels(self, size):
-
-        self.font_size = sp(size / self.scale)
-        print(f"Font size changed to {self.font_size}")
+    def font_size_callback(self, obj, value):
+        print(obj)
+        obj.font_size = self.font_size
 
 
 if __name__ == '__main__':

@@ -1,15 +1,11 @@
-from kivy.lang import Builder
-from kivy.metrics import sp
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.screenmanager import Screen
+from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.scrollview import ScrollView
 
 from fivecalls.config import KivyConfig
-from fivecalls.controls import FCListLabel, FCTextLabel, FCContactButton, FCToolbar
+from fivecalls.controls import FCContactButton, FCListLabel, FCTextLabel
+from fivecalls.toolbar import FCToolbar
 from fivecalls.data import Issue
-
-Builder.load_file('fivecalls/templates/contact_button.kv')
-# Builder.load_file('fivecalls/templates/toolbar.kv')
 
 
 def button_callback(instance: FCContactButton):
@@ -43,8 +39,8 @@ class IssueView(Screen):
 
         self.layout.add_widget(name_label)
 
-        # reason_label = FCTextLabel(text=issue.reason)
-        # self.layout.add_widget(reason_label)
+        reason_label = FCTextLabel(text=issue.reason)
+        self.layout.add_widget(reason_label)
 
         call_label = FCListLabel(text="Call your representatives")
 
