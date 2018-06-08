@@ -58,3 +58,6 @@ class IssueView(Screen):
         )
         self.scrollview.add_widget(self.layout)
         self.add_widget(self.scrollview)
+
+        # This is where a scroll hint would get hooked up
+        # self.scrollview.bind(scroll_y=print)
