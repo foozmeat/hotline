@@ -10,6 +10,15 @@ from fivecalls.data import IMAGE_PATH
 from fivecalls.helpers import random_color
 
 
+def add_debug_rect(obj):
+    kc = KivyConfig()
+
+    if kc.debug:
+        with obj.canvas.before:
+            random_color()
+            Rectangle(pos=obj.pos, size=obj.size)
+
+
 def my_height_callback(obj, texture: Texture):
     if texture:
         obj.height = max(texture.size[1], 100)
