@@ -1,13 +1,11 @@
-from kivy.metrics import sp
 from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
-from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager
 
 from fivecalls.config import KivyConfig
-from fivecalls.controls import FCListButton
+from fivecalls.views.controls import FCListButton
 
 
 class FCToolbarButton(FCListButton):

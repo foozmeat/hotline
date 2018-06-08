@@ -3,10 +3,10 @@ from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.scrollview import ScrollView
 
 from fivecalls.config import KivyConfig
-from fivecalls.controls import FCIssueButton, FCListLabel
+from fivecalls.views.controls import FCIssueButton, FCListLabel
 from fivecalls.data import FiveCallsData
-from fivecalls.issue_view import IssueView
-from fivecalls.toolbar import FCToolbar
+from fivecalls.views.issue_view import IssueView
+from fivecalls.views.toolbar import FCToolbar
 
 ISSUES_SCREEN = 'Issues'
 

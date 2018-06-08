@@ -1,16 +1,10 @@
-from kivy.graphics.vertex_instructions import Rectangle
-from kivy.metrics import sp
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.label import Label
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.stacklayout import StackLayout
-from kivy.uix.widget import Widget
 
 from fivecalls.config import KivyConfig
-from fivecalls.controls import FCListButton, FCListLabel, FCBaseLabel, add_debug_rect, FCTextLabel
-from fivecalls.helpers import random_color
-from fivecalls.toolbar import FCToolbar
-from fivecalls.issues import ISSUES_SCREEN
+from fivecalls.views.controls import FCListButton, FCTextLabel
+from fivecalls.views.toolbar import FCToolbar
+from fivecalls.views.issues import ISSUES_SCREEN
 
 WELCOME_SCREEN = 'Welcome Screen'
 

@@ -6,8 +6,8 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager
 
-from fivecalls.issues import IssueList, ISSUES_SCREEN
-from fivecalls.welcome import WelcomeScreen, WELCOME_SCREEN
+from fivecalls.views.issues import IssueList, ISSUES_SCREEN
+from fivecalls.views.welcome import WelcomeScreen, WELCOME_SCREEN
 
 Builder.load_file('fivecalls/templates/contact_button.kv')
 Builder.load_file('fivecalls/templates/toolbar.kv')
