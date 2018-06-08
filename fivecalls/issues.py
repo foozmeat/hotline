@@ -4,16 +4,14 @@ from kivy.uix.scrollview import ScrollView
 
 from fivecalls.config import KivyConfig
 from fivecalls.controls import FCIssueButton, FCListLabel
-from fivecalls.toolbar import FCToolbar
 from fivecalls.data import FiveCallsData
 from fivecalls.issue_view import IssueView
+from fivecalls.toolbar import FCToolbar
 
 ISSUES_SCREEN = 'Issues'
 
 
-
 def button_callback(instance: FCIssueButton):
-
     root = instance.get_root_window().children[0]  # type: ScreenManager
     root.transition.direction = 'left'
 

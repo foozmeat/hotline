@@ -6,7 +6,7 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 
 from fivecalls.config import KivyConfig
-from fivecalls.data import IMAGE_PATH
+from fivecalls.data import IMAGE_PATH, Issue
 from fivecalls.helpers import random_color
 
 
@@ -109,15 +109,13 @@ class FCContactButton(Button):
     person_image = StringProperty()
     person_reason = StringProperty()
 
-    def __init__(self, contact: dict = None, **kwargs):
+    def __init__(self, contact: dict = None, issue: Issue = None, **kwargs):
         super().__init__(**kwargs)
 
         self.kc = KivyConfig()
+        self.issue = issue
 
         self.person_name = contact['name']
         self.person_image = IMAGE_PATH + contact['id'] + '.jpg'
-        print(self.person_image)
         self.person_area = contact['area']
         self.person_reason = contact['reason']
-
-
