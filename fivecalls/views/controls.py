@@ -114,6 +114,7 @@ class FCContactButton(Button):
 
         self.kc = KivyConfig()
         self.issue = issue
+        self.contact = contact
 
         self.person_name = contact['name']
         self.person_image = IMAGE_PATH + contact['id'] + '.jpg'

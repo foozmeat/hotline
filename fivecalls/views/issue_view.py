@@ -13,7 +13,7 @@ def button_callback(instance: FCContactButton):
     root = instance.get_root_window().children[0]  # type: ScreenManager
     root.transition.direction = 'left'
 
-    cv = CallView(issue=instance.issue)
+    cv = CallView(issue=instance.issue, contact=instance.contact)
     cv.name = f"dynamic_call_view"
 
     root.add_widget(cv)
@@ -49,7 +49,7 @@ class IssueView(Screen):
         self.layout.add_widget(call_label)
 
         for c in self.issue.contacts:
-            c_button = FCContactButton(contact=c)
+            c_button = FCContactButton(issue=self.issue, contact=c)
             c_button.bind(on_press=button_callback)
             self.layout.add_widget(c_button)
 

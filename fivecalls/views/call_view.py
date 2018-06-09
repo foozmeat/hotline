@@ -9,10 +9,12 @@ from fivecalls.data import Issue
 
 class CallView(Screen):
 
-    def __init__(self, issue: Issue = None, **kwargs):
+    def __init__(self, issue: Issue = None, contact: dict = None, **kwargs):
         super().__init__(**kwargs)
 
         self.issue = issue
+        self.contact = contact
+
         self.kc = KivyConfig()
 
         self.layout = BoxLayout(
