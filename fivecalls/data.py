@@ -80,6 +80,7 @@ class FiveCallsData(metaclass=Singleton):
         self.active_issues = []
         self.categories = {}
         self.contacts = {}
+        self.global_count = 0
 
         if not Path(JSON_PATH).exists():
             from fivecalls.fetch import fetch
@@ -107,6 +108,8 @@ class FiveCallsData(metaclass=Singleton):
                 self.contacts[c['id']] = c
 
             self.issues.append(new_issue)
+
+        self.global_count = self._data['global_count']
 
 
 if __name__ == '__main__':
