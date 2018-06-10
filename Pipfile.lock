@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "575f11db84b5a0bccda7c14f38946e578f0462e59a0b5dd42d0cae113a1eefbc"
+            "sha256": "c239a10d97c31fda838a6283a80088c1aa11fce78b515eb44729e1332f6d5f5f"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -74,6 +74,14 @@
         "kivy": {
             "file": "https://github.com/kivy/kivy/archive/master.zip"
         },
+        "pyserial": {
+            "hashes": [
+                "sha256:6e2d401fdee0eab996cf734e67773a0143b932772ca8b42451440cfed942c627",
+                "sha256:e0770fadba80c31013896c7e6ef703f72e7834965954a78e71a3049488d4d7d8"
+            ],
+            "index": "pypi",
+            "version": "==3.4"
+        },
         "requests": {
             "hashes": [
                 "sha256:6a1b267aa90cac58ac3a765d067950e7dbbf75b1da07e895d1f594193a40a38b",
@@ -113,11 +121,11 @@
         },
         "mypy": {
             "hashes": [
-                "sha256:01cf289838f266ae7c6550c813181ee77d21eac9459dbf067e7a95a0a2db9721",
-                "sha256:bc251cb31bc236d9fe4bcc442c994c45fff2541f7161ee52dc949741fe9ca3dd"
+                "sha256:1b899802a89b67bb68f30d788bba49b61b1f28779436f06b75c03495f9d6ea5c",
+                "sha256:f472645347430282d62d1f97d12ccb8741f19f1572b7cf30b58280e4e0818739"
             ],
             "index": "pypi",
-            "version": "==0.600"
+            "version": "==0.610"
         },
         "pefile": {
             "hashes": [
