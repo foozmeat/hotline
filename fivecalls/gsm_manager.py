@@ -1,4 +1,5 @@
 import platform
+import time
 from random import choice
 
 import serial
@@ -27,6 +28,11 @@ class GSMManager(metaclass=Singleton):
         if platform.system() == 'Darwin':
             return
 
+    def power_off(self):
+
+        if platform.system() == 'Darwin':
+            return
+
     def open(self) -> bool:
 
         if self.connection and self.connection.is_open:
@@ -46,6 +52,7 @@ class GSMManager(metaclass=Singleton):
         else:
             self.write('AT')
             result = self.flush().strip()
+            self.send_at_cmd('+CHFA=1')  # Select AUX out
 
             if result != 'OK':
                 print(f"Unable to open serial connection: {result}")
@@ -61,17 +68,18 @@ class GSMManager(metaclass=Singleton):
     def close(self):
         if self.connection and self.connection.is_open:
             self.connection.close()
+            self.power_off()
 
     def write(self, cmd):
         cmd = bytes(cmd + self.eol, 'ascii')
-        print(f"WRITE->{cmd}")
+        print(f"WRITE-> {cmd}")
         self.connection.write(cmd)
         self.readline(decode=False)
 
     def readline(self, decode=True) -> str:
 
         data = self.connection.readline().strip()
-        print(f"READ ->{data}")
+        print(f"READ -> {data}")
 
         if decode:
             data_str = data.decode('ascii')  # type: str
@@ -113,6 +121,23 @@ class GSMManager(metaclass=Singleton):
 
         return result
 
+    def send_cmd_and_wait(self, cmd: str, wait_for: str):
+        if not self.is_open():
+            return ""
+
+        cmd = 'AT' + cmd
+        self.write(cmd)
+
+        found = False
+        data = ''
+
+        while not found:
+            data += self.flush()
+            if wait_for in data:
+                found = True
+
+        return data
+
     def _get_numeric_result(self, cmd):
         r = self.send_at_cmd(cmd)
 
@@ -138,7 +163,14 @@ class GSMManager(metaclass=Singleton):
     def hang_up(self):
         self.send_at_cmd('H')
 
-    def dial_number(self, number):
+    def dial_number(self, number: str):
+
+        n_list = list(number)
+        tones = ','.join(n_list)
+
+        self.send_cmd_and_wait(f'+STTONE=1,20,2000', '+STTONE: 0')
+        self.send_at_cmd(f'+CLDTMF=1,"{tones}",80')
+
         self.send_at_cmd(f"D{number};")
 
     def get_phone_status(self):
@@ -149,5 +181,11 @@ class GSMManager(metaclass=Singleton):
 if __name__ == '__main__':
     g = GSMManager()
     g.open()
-    g.set_volume(choice(range(0, 100)))
+    g.set_volume(100)
+    # g.set_volume(choice(range(0, 100)))
+    g.dial_number('5038163008')
+    g.get_phone_status()
+    while g.status != 0:
+        g.get_phone_status()
+        time.sleep(0.5)
     g.close()
