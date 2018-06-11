@@ -1,3 +1,4 @@
+from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.metrics import sp
 from kivy.uix.boxlayout import BoxLayout
@@ -5,24 +6,13 @@ from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import Screen
 from kivy.uix.scrollview import ScrollView
+from kivy.uix.widget import Widget
 
 from fivecalls.config import KivyConfig
 from fivecalls.views.controls import FCTextLabel, FCListButton, FCContactButton
 from fivecalls.views.toolbar import FCToolbar
 from fivecalls.data import Issue
-
-
-class CallButton(FCListButton):
-
-    def __init__(self, number: str = None, **kwargs):
-        super().__init__(**kwargs)
-
-        self.number = number
-        self.text = "Call"
-
-    def on_press(self):
-        super().on_press()
-
+from fivecalls.gsm_manager import GSMManager
 
 class OutcomeButton(FCListButton):
     def __init__(self, **kwargs):
@@ -41,6 +31,7 @@ class CallView(Screen):
         self.contact = contact
 
         self.kc = KivyConfig()
+        self.phone = GSMManager()
 
         self.layout = BoxLayout(
                 orientation='vertical',
@@ -55,8 +46,9 @@ class CallView(Screen):
         contact_button.disabled = True
         self.layout.add_widget(contact_button)
 
-        call_button = CallButton()
-        self.layout.add_widget(call_button)
+        self.call_button = FCListButton(text="Call")
+        self.call_button.bind(on_press=self.call_button_pressed)
+        self.layout.add_widget(self.call_button)
 
         reason_label = FCTextLabel(text=issue.script)
         self.layout.add_widget(reason_label)
@@ -76,3 +68,34 @@ class CallView(Screen):
         )
         self.scrollview.add_widget(self.layout)
         self.add_widget(self.scrollview)
+
+    def call_button_pressed(self, obj: Widget):
+
+        if self.phone.status == 0:
+            self.phone.dial_number(self.contact['phone'])
+            obj.disabled = True
+
+            Clock.schedule_interval(self.update_call_status, 0.5)
+        else:
+            self.phone.hang_up()
+
+    def update_call_status(self, dt):
+
+        self.phone.get_phone_status()
+
+        if self.phone.status == 0:
+            # Call has ended
+            self.call_button.text = "Call"
+            self.call_button.disabled = False
+            return False
+
+        elif self.phone.status == 3:
+            self.call_button.text = "Ringing…"
+            return True
+
+        elif self.phone.status == 4:
+            self.call_button.text = "Hang Up"
+            self.call_button.disabled = False
+            return True
+
+

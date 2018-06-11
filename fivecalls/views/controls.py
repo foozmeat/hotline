@@ -21,7 +21,7 @@ def add_debug_rect(obj):
 
 def my_height_callback(obj, texture: Texture):
     if texture:
-        obj.height = max(texture.size[1], 100)
+        obj.height = max(texture.size[1], 50)
 
 
 def my_size_callback(obj, texture: Texture):
@@ -86,7 +86,7 @@ class FCListButton(Button):
         self.text_size = (self.kc.width, None)
         self.size_hint_y = None
         self.halign = 'center'
-        self.padding = (sp(20), sp(20))
+        self.padding = (sp(10), sp(10))
 
         self.bind(texture=my_height_callback)
         self.kc.bind(font_size=self.update_font_size)

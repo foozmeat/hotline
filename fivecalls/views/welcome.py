@@ -36,7 +36,7 @@ class WelcomeScreen(Screen):
             text=f"MAKE YOUR VOICE HEARD\n\nCalling is the most effective way to influence your representatives.")
         layout.add_widget(welcome_text_label)
 
-        stat_label = FCTextLabel(text=f"Together the 5 Calls community has contributed {fcd.global_count} calls!")
+        stat_label = FCTextLabel(text=f"Together the 5 Calls community has contributed {fcd.global_count:,} calls!")
         layout.add_widget(stat_label)
 
         # layout.add_widget(Widget())  # This will fill up any empty space

@@ -1,8 +1,6 @@
 import platform
 import re
 import time
-from random import choice
-
 import serial
 
 from fivecalls.singleton import Singleton
@@ -36,7 +34,7 @@ class GSMManager(metaclass=Singleton):
 
     def open(self) -> bool:
 
-        if self.connection and self.connection.is_open:
+        if self.is_open():
             return True
 
         self.power_on()
@@ -165,6 +163,9 @@ class GSMManager(metaclass=Singleton):
 
     def dial_number(self, number: str):
 
+        if not self.open():
+            return
+
         n_list = list(number)
         tones = ','.join(n_list)
 
@@ -220,11 +221,13 @@ class GSMManager(metaclass=Singleton):
 
 
 if __name__ == '__main__':
-    g = GSMManager()
-    g.open()
+    from random import choice
 
-    g.set_volume(100)
-    g.set_volume(choice(range(0, 100)))
+    g = GSMManager()
+    # g.open()
+
+    # g.set_volume(100)
+    # g.set_volume(choice(range(0, 100)))
     g.dial_number('5038163008')
     g.get_phone_status()
     while g.status != 0:
