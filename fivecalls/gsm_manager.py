@@ -1,4 +1,5 @@
 import platform
+import re
 import time
 from random import choice
 
@@ -52,7 +53,8 @@ class GSMManager(metaclass=Singleton):
         else:
             self.write('AT')
             result = self.flush().strip()
-            self.send_at_cmd('+CHFA=1')  # Select AUX out
+            self.send_at_cmd('AT+CHFA=1')  # Select AUX out
+            self.send_at_cmd('AT+CMEE=2')  # Enable verbose errors
 
             if result != 'OK':
                 print(f"Unable to open serial connection: {result}")
@@ -71,18 +73,18 @@ class GSMManager(metaclass=Singleton):
             self.power_off()
 
     def write(self, cmd):
-        cmd = bytes(cmd + self.eol, 'ascii')
         print(f"WRITE-> {cmd}")
+        cmd = bytes(cmd + self.eol, 'ascii')
         self.connection.write(cmd)
-        self.readline(decode=False)
+        self.connection.readline()
 
     def readline(self, decode=True) -> str:
 
         data = self.connection.readline().strip()
-        print(f"READ -> {data}")
 
         if decode:
             data_str = data.decode('ascii')  # type: str
+            print(f"READ -> {data_str}")
             return data_str
         else:
             return ""
@@ -113,7 +115,6 @@ class GSMManager(metaclass=Singleton):
         if not self.is_open():
             return ""
 
-        cmd = 'AT' + cmd
         self.write(cmd)
 
         result = self.readline().strip()
@@ -125,7 +126,6 @@ class GSMManager(metaclass=Singleton):
         if not self.is_open():
             return ""
 
-        cmd = 'AT' + cmd
         self.write(cmd)
 
         found = False
@@ -152,40 +152,85 @@ class GSMManager(metaclass=Singleton):
             return 0
 
     def get_volume(self):
-        self.volume = self._get_numeric_result('+CLVL?')
+        self.volume = self._get_numeric_result('AT+CLVL?')
         print(f"Volume: {self.volume}")
 
     def set_volume(self, new_vol: int):
         print(f"Setting volume to {new_vol}")
-        r = self.send_at_cmd(f'+CLVL={new_vol}')
+        r = self.send_at_cmd(f'AT+CLVL={new_vol}')
         self.get_volume()
 
     def hang_up(self):
-        self.send_at_cmd('H')
+        self.send_at_cmd('ATH')
 
     def dial_number(self, number: str):
 
         n_list = list(number)
         tones = ','.join(n_list)
 
-        self.send_cmd_and_wait(f'+STTONE=1,20,2000', '+STTONE: 0')
-        self.send_at_cmd(f'+CLDTMF=1,"{tones}",80')
+        self.send_cmd_and_wait(f'AT+STTONE=1,20,2000', '+STTONE: 0')
+        self.send_at_cmd(f'AT+CLDTMF=1,"{tones}",80')
 
-        self.send_at_cmd(f"D{number};")
+        self.send_at_cmd(f"ATD{number};")
 
     def get_phone_status(self):
-        self.status = self._get_numeric_result('+CPAS')
+        self.status = self._get_numeric_result('AT+CPAS')
         print(f"Status: {self.status}")
+
+    def _gprs_connected(self) -> bool:
+        result = self.send_at_cmd('AT+SAPBR=2,1')
+        m = re.search(r'\+SAPBR: 1,(\d),"[0-9\.]+"', result)
+        status_code = m.group(1)
+        return status_code == "1"
+
+    def _open_gprs(self):
+
+        if not self._gprs_connected():
+            self.send_cmd_and_wait(f'AT+SAPBR=3,1,"Contype","GPRS"', 'OK')
+            self.send_cmd_and_wait(f'AT+SAPBR=3,1,"APN","CMNET"', 'OK')
+            self.send_cmd_and_wait(f'AT+SAPBR=1,1', 'OK')
+
+    def _close_gprs(self):
+        self.send_cmd_and_wait(f'AT+SAPBR=0,1', 'OK')
+
+    def http_get(self, url):
+
+        self._open_gprs()
+        self.send_at_cmd(f'AT+HTTPTERM')  # In case we're in a stale context
+        self.send_cmd_and_wait(f'AT+HTTPINIT', 'OK')
+        self.send_cmd_and_wait(f'AT+HTTPPARA="CID",1', 'OK')
+        self.send_cmd_and_wait(f'AT+HTTPPARA="REDIR",1', 'OK')
+        self.send_cmd_and_wait(f'AT+HTTPPARA="URL","{url}"', 'OK')
+        self.send_cmd_and_wait(f'AT+HTTPACTION=0', '+HTTPACTION: 0')
+
+        self.write('AT+HTTPREAD')
+        result = self.readline()
+        data = ""
+        m = re.search(r'\+HTTPREAD: (\d+)', result)
+        if m:
+            length = int(m.group(1))
+
+            data = self.flush()
+            data = data[0:length]
+
+        self.send_cmd_and_wait(f'AT+HTTPTERM', 'OK')
+        # self._close_gprs()
+
+        return data
 
 
 if __name__ == '__main__':
     g = GSMManager()
     g.open()
+
     g.set_volume(100)
-    # g.set_volume(choice(range(0, 100)))
+    g.set_volume(choice(range(0, 100)))
     g.dial_number('5038163008')
     g.get_phone_status()
     while g.status != 0:
         g.get_phone_status()
         time.sleep(0.5)
+
+    # print(g.http_get('ifconfig.co/ip'))
+
     g.close()
