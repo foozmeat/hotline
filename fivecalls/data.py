@@ -3,6 +3,7 @@ from pathlib import Path
 
 import requests
 
+from fivecalls.networking import http_get_json
 from fivecalls.singleton import Singleton
 
 
@@ -113,19 +114,13 @@ class FiveCallsData(metaclass=Singleton):
         self.global_count = self._data['global_count']
 
     def fetch(self) -> bool:
-        try:
-            response = requests.get(
-                    url="https://5calls.org/issues/",
-                    params={
-                        "all": "true",
-                        "address": "97211",
-                    },
-            )
-        except requests.exceptions.RequestException:
-            print('HTTP Request failed')
-            return False
-
-        data = response.json()
+        data = http_get_json(
+                "https://5calls.org/issues/",
+                params={
+                    "all": "true",
+                    "address": "97211",
+                },
+        )
 
         for i in data['issues']:
             for contact in i['contacts']:
@@ -144,18 +139,12 @@ class FiveCallsData(metaclass=Singleton):
                             with open(path, 'wb') as f:
                                 f.write(response.content)
 
-        try:
-            response = requests.get(
-                    url="https://5calls.org/report/",
-                    params={},
-            )
-        except requests.exceptions.RequestException:
-            print('HTTP Request failed')
-            return False
+        count_data = http_get_json(
+                "https://5calls.org/report/",
+                params={},
+        )
 
-        else:
-            count_data = response.json()
-            data['global_count'] = int(count_data['count'])
+        data['global_count'] = int(count_data['count'])
 
         with open(JSON_PATH, 'w') as fp:
             json.dump(data, fp)

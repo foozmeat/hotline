@@ -142,9 +142,9 @@ class GSMManager(metaclass=Singleton):
         if 'ERROR' in r:
             return 0
 
-        _, val = r.split(' ')
-
         try:
+            _, val = r.split(' ')
+
             return int(val)
         except ValueError:
             return 0

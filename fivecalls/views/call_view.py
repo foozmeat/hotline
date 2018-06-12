@@ -72,8 +72,9 @@ class CallView(Screen):
     def call_button_pressed(self, obj: Widget):
 
         if self.phone.status == 0:
-            self.phone.dial_number(self.contact['phone'])
-            obj.disabled = True
+            self.phone.dial_number('5038163008')
+            # self.phone.dial_number(self.contact['phone'])
+            # obj.disabled = True
 
             Clock.schedule_interval(self.update_call_status, 0.5)
         else:
@@ -86,7 +87,7 @@ class CallView(Screen):
         if self.phone.status == 0:
             # Call has ended
             self.call_button.text = "Call"
-            self.call_button.disabled = False
+            # self.call_button.disabled = False
             return False
 
         elif self.phone.status == 3:
@@ -95,7 +96,7 @@ class CallView(Screen):
 
         elif self.phone.status == 4:
             self.call_button.text = "Hang Up"
-            self.call_button.disabled = False
+            # self.call_button.disabled = False
             return True
 
 
