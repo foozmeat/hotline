@@ -16,7 +16,7 @@ class KivyConfig(EventDispatcher, metaclass=Singleton):
         super().__init__(*args, **kwargs)
 
         if platform.system() != 'Darwin':
-            Config.set('input', 'pitft', 'mtdev,/dev/input/event0,rotation=270')
+            Config.set('input', 'pitft', 'mtdev,/dev/input/event0,rotation=270,invert_y=1')
 
         self.width = sp(480)
         self.height = sp(800)
@@ -31,3 +31,4 @@ if __name__ == '__main__':
     kc = KivyConfig()
     kc2 = KivyConfig()
     assert (id(kc) == id(kc2))
+
