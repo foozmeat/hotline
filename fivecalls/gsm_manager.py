@@ -212,6 +212,7 @@ class SIM8XXManager(metaclass=Singleton):
         self.send_cmd_and_wait(f'AT+HTTPPARA="CID",1', 'OK')
         self.send_cmd_and_wait(f'AT+HTTPPARA="REDIR",1', 'OK')
         self.send_cmd_and_wait(f'AT+HTTPPARA="URL","{url}"', 'OK')
+        self.send_cmd_and_wait(f'AT+HTTPSSL=1', 'OK')  # Not supported by all SIM8xx chips
         self.send_cmd_and_wait(f'AT+HTTPACTION=0', '+HTTPACTION: 0')
 
         self.write('AT+HTTPREAD')
