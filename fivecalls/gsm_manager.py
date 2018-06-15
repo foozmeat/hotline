@@ -1,12 +1,17 @@
-import platform
+import sys
 import re
 import time
 import serial
-
 from fivecalls.singleton import Singleton
 
+LINUX = False
+if sys.platform == 'linux':
+    import RPi.GPIO as GPIO
 
-class GSMManager(metaclass=Singleton):
+    LINUX = True
+
+
+class SIM8XXManager(metaclass=Singleton):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -17,27 +22,26 @@ class GSMManager(metaclass=Singleton):
         self.volume = 0
         self.status = 0
 
-        if platform.system() == 'Darwin':
+        if not LINUX:
             self.port = '/dev/tty.usbserial'
 
-    def power_on(self):
+    def toggle_power(self):
 
-        # possibly check a power status pin?
-
-        if platform.system() == 'Darwin':
+        if not LINUX:
             return
-
-    def power_off(self):
-
-        if platform.system() == 'Darwin':
-            return
+        else:
+            print("Toggling Power")
+            GPIO.setmode(GPIO.BCM)
+            GPIO.setup(4, GPIO.OUT)
+            GPIO.output(4, GPIO.LOW)
+            time.sleep(1)
+            GPIO.output(4, GPIO.HIGH)
+            GPIO.cleanup()
 
     def open(self) -> bool:
 
         if self.is_open():
             return True
-
-        self.power_on()
 
         try:
             self.connection = serial.Serial(
@@ -51,8 +55,14 @@ class GSMManager(metaclass=Singleton):
         else:
             self.write('AT')
             result = self.flush().strip()
+
+            if result == "":
+                self.toggle_power()
+                time.sleep(2)
+
             self.send_at_cmd('AT+CHFA=1')  # Select AUX out
             self.send_at_cmd('AT+CMEE=2')  # Enable verbose errors
+            self.set_volume(100)
 
             if result != 'OK':
                 print(f"Unable to open serial connection: {result}")
@@ -68,7 +78,7 @@ class GSMManager(metaclass=Singleton):
     def close(self):
         if self.connection and self.connection.is_open:
             self.connection.close()
-            self.power_off()
+            self.toggle_power()
 
     def write(self, cmd):
         print(f"WRITE-> {cmd}")
@@ -223,7 +233,7 @@ class GSMManager(metaclass=Singleton):
 if __name__ == '__main__':
     from random import choice
 
-    g = GSMManager()
+    g = SIM8XXManager()
     # g.open()
 
     # g.set_volume(100)

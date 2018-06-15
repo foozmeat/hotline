@@ -12,7 +12,7 @@ from fivecalls.config import KivyConfig
 from fivecalls.views.controls import FCTextLabel, FCListButton, FCContactButton
 from fivecalls.views.toolbar import FCToolbar
 from fivecalls.data import Issue
-from fivecalls.gsm_manager import GSMManager
+from fivecalls.gsm_manager import SIM8XXManager
 
 class OutcomeButton(FCListButton):
     def __init__(self, **kwargs):
@@ -31,7 +31,7 @@ class CallView(Screen):
         self.contact = contact
 
         self.kc = KivyConfig()
-        self.phone = GSMManager()
+        self.phone = SIM8XXManager()
 
         self.layout = BoxLayout(
                 orientation='vertical',

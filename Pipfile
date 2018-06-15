@@ -8,7 +8,7 @@ requests = "*"
 cython = "==0.25.2"
 kivy = {file = "https://github.com/kivy/kivy/archive/master.zip"}
 pyserial = "*"
-'RPi.GPIO'  = {version = "*", sys_platform = "== 'Linux'"}
+'RPi.GPIO'  = {version = "*", sys_platform = "== 'linux'"}
 
 [dev-packages]
 mypy = "*"

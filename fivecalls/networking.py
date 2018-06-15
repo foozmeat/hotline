@@ -4,7 +4,7 @@ Provides a layer of indirection for web requests.
 import platform
 import requests
 
-from fivecalls.gsm_manager import GSMManager
+from fivecalls.gsm_manager import SIM8XXManager
 
 
 def http_get_json(url, params={}):
@@ -30,6 +30,6 @@ def http_get_json(url, params={}):
         # On Linux assume that we'll need to fetch via GPRS
         from urllib.parse import urlparse
 
-        phone = GSMManager()
+        phone = SIM8XXManager()
         phone.http_get('ifconfig.co/ip')
 

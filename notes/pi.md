@@ -1,4 +1,4 @@
-# OS Setup 
+# OS Setup
 * screen rotation - add `display_rotate=3` to `/boot/config.txt`
 * screen brightness `echo 255 > /sys/class/backlight/rpi_backlight/brightness`
 * disable HDMI - `tvservice -o`
@@ -30,7 +30,7 @@ sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf
    gstreamer1.0-{omx,alsa} libmtdev-dev libmtdev1
 ```
 
-* Install Python 3.6 from source
+* Install Python 3.6 from source into `/opt/python3.6`
 
 ```
 sudo /opt/python3.6/bin/pip3.6 install pipenv

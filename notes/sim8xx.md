@@ -4,6 +4,7 @@
 AT // auto-baud
 AT+CLVL? // query volume level -- +CLVL: n
 AT+CLVL=n // set volume
+AT+CPOWD=1 // power down
 ```
 ```
 ATE0 // disable echo
@@ -29,8 +30,8 @@ ATH // hang up
 AT+CFUN=1 // full functionality
 AT+CGATT=1
 AT+SAPBR=3,1,"Contype","GPRS"
-AT+SAPBR=3,1,"APN","wholesale" 
-AT+SAPBR=1,1 
+AT+SAPBR=3,1,"APN","wholesale"
+AT+SAPBR=1,1
 AT+SAPBR=2,1  // shows the IP address
 AT+SAPBR=0,1 // close
 ```
