@@ -36,3 +36,22 @@ sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf
 sudo /opt/python3.6/bin/pip3.6 install pipenv
 /opt/python3.6/bin/pipenv --python /opt/python3.6/bin/python3.6 install
 ```
+
+* PPP configuration
+  * `apt install ppp`
+  * `usermod -G dip -a pi`
+  * install peer script in `/etc/ppp/peers/sim8xx`
+```
+connect "/usr/sbin/chat -v -f /etc/chatscripts/gprs -T wholesale"
+/dev/ttyAMA0
+115200
+noipdefault
+usepeerdns
+defaultroute
+persist
+noauth
+nocrtscts
+local
+```
+  * `pon sim8xx` brings up the interface
+  * `poff sim8xx` tears it down
