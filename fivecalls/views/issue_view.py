@@ -37,21 +37,18 @@ class IssueView(Screen):
 
         self.layout.add_widget(FCToolbar())
 
-        name_label = FCListLabel(text=issue.name)
+        self.layout.add_widget(FCListLabel(text=issue.name))
 
-        self.layout.add_widget(name_label)
-
-        reason_label = FCTextLabel(text=issue.reason)
-        self.layout.add_widget(reason_label)
-
-        call_label = FCListLabel(text="Call your representatives")
-
-        self.layout.add_widget(call_label)
+        self.layout.add_widget(FCListLabel(text="Calls"))
 
         for c in self.issue.contacts:
             c_button = FCContactButton(issue=self.issue, contact=c)
             c_button.bind(on_press=button_callback)
             self.layout.add_widget(c_button)
+
+        self.layout.add_widget(FCListLabel(text="Background"))
+
+        self.layout.add_widget(FCTextLabel(text=issue.reason))
 
         self.scrollview = ScrollView(
                 do_scroll_x=False,
