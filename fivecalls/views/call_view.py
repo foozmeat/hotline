@@ -87,16 +87,22 @@ class CallView(Screen):
         if self.phone.status == 0:
             # Call has ended
             self.call_button.text = "Call"
-            # self.call_button.disabled = False
+            self.call_button.disabled = False
             return False
+
+        elif self.phone.status == 2:
+            self.call_button.text = "Ringing…"
+            self.call_button.disabled = True
+            return True
 
         elif self.phone.status == 3:
             self.call_button.text = "Ringing…"
+            self.call_button.disabled = True
             return True
 
         elif self.phone.status == 4:
             self.call_button.text = "Hang Up"
-            # self.call_button.disabled = False
+            self.call_button.disabled = False
             return True
 
 
