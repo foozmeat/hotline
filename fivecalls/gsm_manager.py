@@ -64,8 +64,8 @@ class SIM8XXManager(metaclass=Singleton):
                 print(f"Unable to open serial connection: {result}")
                 return False
 
-            if not LINUX:
-                self.send_at_cmd('AT+CHFA=1')  # Select AUX out
+            # if not LINUX:
+            self.send_at_cmd('AT+CHFA=1')  # Select AUX out
 
             self.send_at_cmd('AT+CMEE=2')  # Enable verbose errors
             self.set_volume(100)
