@@ -122,38 +122,43 @@ class FiveCallsData(metaclass=Singleton):
                 },
         )
 
-        for i in data['issues']:
-            for contact in i['contacts']:
-                path = IMAGE_PATH + contact['id'] + '.jpg'
+        if data:
+            for i in data['issues']:
+                for contact in i['contacts']:
+                    path = IMAGE_PATH + contact['id'] + '.jpg'
 
-                if not Path(path).exists() and contact['photoURL']:
+                    if not Path(path).exists() and contact['photoURL']:
 
-                    try:
-                        response = requests.get(contact['photoURL'])
+                        try:
+                            response = requests.get(contact['photoURL'])
 
-                    except requests.exceptions.RequestException:
-                        print('HTTP Request failed')
-                        return False
-                    else:
-                        if response.ok:
-                            with open(path, 'wb') as f:
-                                f.write(response.content)
+                        except requests.exceptions.RequestException:
+                            print('HTTP Request failed')
+                            return False
+                        else:
+                            if response.ok:
+                                with open(path, 'wb') as f:
+                                    f.write(response.content)
 
-        count_data = http_get_json(
-                "https://5calls.org/report/",
-                params={},
-        )
+            count_data = http_get_json(
+                    "https://5calls.org/report/",
+                    params={},
+            )
 
-        data['global_count'] = int(count_data['count'])
+            data['global_count'] = int(count_data['count'])
 
-        with open(JSON_PATH, 'w') as fp:
-            json.dump(data, fp)
+            with open(JSON_PATH, 'w') as fp:
+                json.dump(data, fp)
 
-        return True
+            return True
+        else:
+            return False
 
 
 if __name__ == '__main__':
     fcd = FiveCallsData()
-    print(f"issues: {len(fcd.issues)}")
-    print(f"active issues: {len(fcd.active_issues)}")
-    print(f"categories: {len(fcd.categories)}")
+
+    if fcd.fetch():
+        print(f"issues: {len(fcd.issues)}")
+        print(f"active issues: {len(fcd.active_issues)}")
+        print(f"categories: {len(fcd.categories)}")

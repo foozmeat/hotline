@@ -1,35 +1,34 @@
 """
 Provides a layer of indirection for web requests.
 """
-import platform
+import sys
 import requests
 
 from fivecalls.gsm_manager import SIM8XXManager
 
 
 def http_get_json(url, params={}):
+    phone = SIM8XXManager()
+    data = None
 
-    if platform.system() == 'Darwin':
-        # Assume a working network stack on a Mac
-        try:
-            response = requests.get(
-                    url=url,
-                    params=params,
-            )
-        except requests.exceptions.RequestException:
-            print('HTTP Request failed')
-            return False
+    if sys.platform == 'linux':
+        phone.ppp_up()
 
-        if response.ok:
-            data = response.json()
-            return data
-        else:
-            return None
+    try:
+        response = requests.get(
+                url=url,
+                params=params,
+        )
+    except requests.exceptions.RequestException:
+        print('HTTP Request failed')
+        return False
 
     else:
-        # On Linux assume that we'll need to fetch via GPRS
-        from urllib.parse import urlparse
+        if response.ok:
+            data = response.json()
 
-        phone = SIM8XXManager()
-        phone.http_get('ifconfig.co/ip')
+    finally:
+        if sys.platform == 'linux':
+            phone.ppp_down()
 
+        return data

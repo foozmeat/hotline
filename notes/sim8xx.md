@@ -48,17 +48,17 @@ AT+CCLK? // show local time
 AT+CLDTMF=1,"1,5,0,3,8,1,6,3,0,0,8",80 // Generate DTMF
 AT+CENG=1 // switch on engineering mode
 AT+CENG? // show cell connections
-AT+STTONE=1,20,5000 // dialtone 5s
+AT+STTONE=1,20,1000 // dialtone 1s
 AT+CPAS // phone status: 0:ready, 3:ringing 4:call in progress
 ```
 
 #### RJ9
 ```
-Red     Speaker Ground
 Green   Speaker +
+Red     Speaker -
 
-Black   Mic ?
-Yellow  Mic ?
+Black   Mic +
+Yellow  Mic -
 ```
 
 #### 3.5mm cable

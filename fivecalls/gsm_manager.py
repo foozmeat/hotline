@@ -1,6 +1,9 @@
+import subprocess
 import sys
 import re
 import time
+from pathlib import Path
+
 import serial
 from fivecalls.singleton import Singleton
 
@@ -53,30 +56,37 @@ class SIM8XXManager(metaclass=Singleton):
             raise
 
         else:
-            self.write('AT')
-            result = self.flush().strip()
-
-            if result == "":
+            if not self.is_powered_on():
                 self.toggle_power()
-                time.sleep(2)
+                time.sleep(3)
 
-            self.send_at_cmd('AT+CHFA=1')  # Select AUX out
-            self.send_at_cmd('AT+CMEE=2')  # Enable verbose errors
-            self.set_volume(100)
-
-            if result != 'OK':
+            if not self.is_powered_on():
                 print(f"Unable to open serial connection: {result}")
                 return False
 
+            if not LINUX:
+                self.send_at_cmd('AT+CHFA=1')  # Select AUX out
+
+            self.send_at_cmd('AT+CMEE=2')  # Enable verbose errors
+            self.set_volume(100)
             self.get_volume()
             self.get_phone_status()
             return True
+
+    def is_powered_on(self) -> bool:
+        if not self.is_open():
+            return False
+
+        self.write('AT')
+        result = self.flush().strip()
+        return "OK" in result
 
     def is_open(self) -> bool:
         return self.connection and self.connection.is_open
 
     def close(self):
         if self.connection and self.connection.is_open:
+            print("Closing serial connection")
             self.connection.close()
             self.toggle_power()
 
@@ -144,6 +154,7 @@ class SIM8XXManager(metaclass=Singleton):
             if wait_for in data:
                 found = True
 
+        print(f"READ -> {data}")
         return data
 
     def _get_numeric_result(self, cmd):
@@ -188,47 +199,74 @@ class SIM8XXManager(metaclass=Singleton):
         self.status = self._get_numeric_result('AT+CPAS')
         print(f"Status: {self.status}")
 
-    def _gprs_connected(self) -> bool:
-        result = self.send_at_cmd('AT+SAPBR=2,1')
-        m = re.search(r'\+SAPBR: 1,(\d),"[0-9\.]+"', result)
-        status_code = m.group(1)
-        return status_code == "1"
+    # def _gprs_connected(self) -> bool:
+    #     result = self.send_at_cmd('AT+SAPBR=2,1')
+    #     m = re.search(r'\+SAPBR: 1,(\d),"[0-9\.]+"', result)
+    #     status_code = m.group(1)
+    #     return status_code == "1"
 
-    def _open_gprs(self):
+    # def _open_gprs(self):
+    #
+    #     if not self.open():
+    #         return
+    #
+    #     if not self._gprs_connected():
+    #         self.send_cmd_and_wait(f'AT+SAPBR=3,1,"Contype","GPRS"', 'OK')
+    #         self.send_cmd_and_wait(f'AT+SAPBR=3,1,"APN","CMNET"', 'OK')
+    #         self.send_cmd_and_wait(f'AT+SAPBR=1,1', 'OK')
 
-        if not self._gprs_connected():
-            self.send_cmd_and_wait(f'AT+SAPBR=3,1,"Contype","GPRS"', 'OK')
-            self.send_cmd_and_wait(f'AT+SAPBR=3,1,"APN","CMNET"', 'OK')
-            self.send_cmd_and_wait(f'AT+SAPBR=1,1', 'OK')
+    # def _close_gprs(self):
+    #     self.send_cmd_and_wait(f'AT+SAPBR=0,1', 'OK')
 
-    def _close_gprs(self):
-        self.send_cmd_and_wait(f'AT+SAPBR=0,1', 'OK')
+    def _ppp_is_up(self) -> bool:
+        ppp_interface = Path('/sys/class/net/ppp0')
+        return ppp_interface.exists()
 
-    def http_get(self, url):
+    def ppp_up(self) -> bool:
+        if self._ppp_is_up():
+            return True
+        print("Bringing ppp0 up")
+        if self.connection:
+            self.connection.close()
+        subprocess.call(['/usr/bin/pon', 'sim8xx'])
+        time.sleep(2)
+        return True
 
-        self._open_gprs()
-        self.send_at_cmd(f'AT+HTTPTERM')  # In case we're in a stale context
-        self.send_cmd_and_wait(f'AT+HTTPINIT', 'OK')
-        self.send_cmd_and_wait(f'AT+HTTPPARA="CID",1', 'OK')
-        self.send_cmd_and_wait(f'AT+HTTPPARA="REDIR",1', 'OK')
-        self.send_cmd_and_wait(f'AT+HTTPPARA="URL","{url}"', 'OK')
-        self.send_cmd_and_wait(f'AT+HTTPSSL=1', 'OK')  # Not supported by all SIM8xx chips
-        self.send_cmd_and_wait(f'AT+HTTPACTION=0', '+HTTPACTION: 0')
+    def ppp_down(self) -> bool:
+        if not self._ppp_is_up():
+            return True
 
-        self.write('AT+HTTPREAD')
-        result = self.readline()
-        data = ""
-        m = re.search(r'\+HTTPREAD: (\d+)', result)
-        if m:
-            length = int(m.group(1))
+        print("Tearing ppp0 down")
+        subprocess.call(['/usr/bin/poff', 'sim8xx'])
+        return True
 
-            data = self.flush()
-            data = data[0:length]
-
-        self.send_cmd_and_wait(f'AT+HTTPTERM', 'OK')
-        # self._close_gprs()
-
-        return data
+    # def http_get(self, url):
+    #
+    #     self._open_gprs()
+    #     # self.send_at_cmd(f'AT+HTTPTERM')  # In case we're in a stale context
+    #     self.send_cmd_and_wait(f'AT+HTTPINIT', 'OK')
+    #     self.send_cmd_and_wait(f'AT+HTTPPARA="CID",1', 'OK')
+    #     self.send_cmd_and_wait(f'AT+HTTPPARA="REDIR",1', 'OK')
+    #     # self.send_cmd_and_wait(f'AT+HTTPPARA="URL","{url}"', 'OK')
+    #     self.send_cmd_and_wait(f'AT+HTTPPARA="URL","ifconfig.co/ip"', 'OK')
+    #
+    #     self.send_cmd_and_wait(f'AT+HTTPSSL=1', 'OK')  # Not supported by all SIM8xx chips
+    #     self.send_cmd_and_wait(f'AT+HTTPACTION=0', '+HTTPACTION: 0')
+    #
+    #     self.write('AT+HTTPREAD')
+    #     result = self.readline()
+    #     data = ""
+    #     m = re.search(r'\+HTTPREAD: (\d+)', result)
+    #     if m:
+    #         length = int(m.group(1))
+    #
+    #         data = self.flush()
+    #         data = data[0:length]
+    #
+    #     self.send_cmd_and_wait(f'AT+HTTPTERM', 'OK')
+    #     # self._close_gprs()
+    #
+    #     return data
 
 
 if __name__ == '__main__':
