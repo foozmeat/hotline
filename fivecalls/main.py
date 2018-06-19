@@ -5,6 +5,7 @@ Config.set('graphics', 'height', 800)
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager
+from kivy.core.window import Window
 
 from fivecalls.views.issues import IssueList, ISSUES_SCREEN
 from fivecalls.views.welcome import WelcomeScreen, WELCOME_SCREEN
@@ -16,7 +17,10 @@ Builder.load_file('fivecalls/templates/toolbar.kv')
 class FiveCallsApp(App):
     title = "Five Calls"
 
+
     def build(self):
+        Window.clearcolor = (1, 1, 1, 1)
+
         fc_screen = ScreenManager()
         fc_screen.add_widget(WelcomeScreen(name=WELCOME_SCREEN))
         fc_screen.add_widget(IssueList(name=ISSUES_SCREEN))
