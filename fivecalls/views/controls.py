@@ -50,6 +50,7 @@ class FCBaseLabel(Label):
         self.size_hint_y = None
         self.bind(texture=my_height_callback)
         self.kc.bind(font_size=self.update_font_size)
+        self.color = [0, 0, 0, 1]
 
     def update_font_size(self, obj, value):
         self.font_size = sp(value)
