@@ -1,4 +1,4 @@
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, BooleanProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
@@ -25,11 +25,14 @@ class FCSizePopup(Popup):
 
 class FCToolbar(BoxLayout):
 
-    def __init__(self, back_hidden=False, **kwargs):
+    back_hidden = BooleanProperty(False)
+
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        if back_hidden:
-            button = self.ids['back_button']  # type: Button
+    def on_back_hidden(self, instance, value):
+        if value:
+            button = self.ids.back_button  # type: Button
             button.opacity = 0
             button.disabled = True
 

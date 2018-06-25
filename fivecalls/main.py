@@ -13,11 +13,11 @@ from fivecalls.views.welcome import WelcomeScreen, WELCOME_SCREEN
 Builder.load_file('fivecalls/templates/controls.kv')
 Builder.load_file('fivecalls/templates/contact_button.kv')
 Builder.load_file('fivecalls/templates/toolbar.kv')
+Builder.load_file('fivecalls/templates/welcome.kv')
 
 
 class FiveCallsApp(App):
     title = "Five Calls"
-
 
     def build(self):
         Window.clearcolor = (1, 1, 1, 1)

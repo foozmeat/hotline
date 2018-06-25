@@ -14,28 +14,28 @@
 #        on_release: root.display_size_popover()
 
 
-<FCSizePopup>:
-
-    title: "Adjust Text Size"
-    size_hint: .8, .2
-
-    BoxLayout:
-        orientation: 'vertical'
-        pos: self.parent.pos
-        size: self.parent.size
-        size_hint: None, None
-
-        Slider:
-            id: size_slider
-            size_hint: 1, .5
-            min: 14
-            max: 30
-            value: root.kc.font_size
-            step: 1
-            on_value:
-                root.size_change(self.value)
-
-        Button:
-            size_hint: 1, .5
-            text: "OK"
-            on_release: root.dismiss()
+#<FCSizePopup>:
+#
+#    title: "Adjust Text Size"
+#    size_hint: .8, .2
+#
+#    BoxLayout:
+#        orientation: 'vertical'
+#        pos: self.parent.pos
+#        size: self.parent.size
+#        size_hint: None, None
+#
+#        Slider:
+#            id: size_slider
+#            size_hint: 1, .5
+#            min: 14
+#            max: 30
+#            value: root.kc.font_size
+#            step: 1
+#            on_value:
+#                root.size_change(self.value)
+#
+#        Button:
+#            size_hint: 1, .5
+#            text: "OK"
+#            on_release: root.dismiss()
