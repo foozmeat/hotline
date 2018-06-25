@@ -1,4 +1,4 @@
-from kivy.properties import ObjectProperty, BooleanProperty
+from kivy.properties import ObjectProperty, BooleanProperty, StringProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
@@ -26,6 +26,7 @@ class FCSizePopup(Popup):
 class FCToolbar(BoxLayout):
 
     back_hidden = BooleanProperty(False)
+    back_label = StringProperty()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -47,6 +48,9 @@ class FCToolbar(BoxLayout):
         if 'dynamic' in current:
             screen = root.get_screen(current)
             root.remove_widget(screen)
+
+    def on_back_label(self, instance, value):
+        self.ids.back_button.text = value
 
     def display_size_popover(self):
         popup = FCSizePopup()

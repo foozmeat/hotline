@@ -3,8 +3,8 @@ from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.scrollview import ScrollView
 
 from fivecalls.config import KivyConfig
-from fivecalls.views.controls import FCIssueButton, FCListLabel
 from fivecalls.data import FiveCallsData
+from fivecalls.views.controls import FCIssueButton, FCListLabel
 from fivecalls.views.issue_view import IssueView
 from fivecalls.views.toolbar import FCToolbar
 
@@ -37,7 +37,9 @@ class IssueList(Screen):
         )
         self.layout.bind(minimum_height=self.layout.setter('height'))
 
-        self.layout.add_widget(FCToolbar())
+        self.t = FCToolbar()
+        self.t.back_label = '< Welcome'
+        self.layout.add_widget(self.t)
 
         top_label = FCListLabel(text='Top Issues', bold=True)
         self.layout.add_widget(top_label)

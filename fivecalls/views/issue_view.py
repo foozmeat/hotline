@@ -35,7 +35,9 @@ class IssueView(Screen):
         )
         self.layout.bind(minimum_height=self.layout.setter('height'))
 
-        self.layout.add_widget(FCToolbar())
+        self.t = FCToolbar()
+        self.t.back_label = '< Issues'
+        self.layout.add_widget(self.t)
 
         self.layout.add_widget(FCListLabel(text=issue.name))
 
