@@ -1,0 +1,9 @@
+<RoundedListButton>:
+    background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+    canvas.before:
+        Color:
+            rgba: self.up_color if self.state=='normal' else self.down_color
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [20,]

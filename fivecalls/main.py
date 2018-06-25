@@ -10,6 +10,7 @@ from kivy.core.window import Window
 from fivecalls.views.issues import IssueList, ISSUES_SCREEN
 from fivecalls.views.welcome import WelcomeScreen, WELCOME_SCREEN
 
+Builder.load_file('fivecalls/templates/controls.kv')
 Builder.load_file('fivecalls/templates/contact_button.kv')
 Builder.load_file('fivecalls/templates/toolbar.kv')
 

@@ -9,7 +9,7 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.widget import Widget
 
 from fivecalls.config import KivyConfig
-from fivecalls.views.controls import FCTextLabel, FCListButton, FCContactButton
+from fivecalls.views.controls import FCTextLabel, FCListButton, FCContactButton, RoundedListButton
 from fivecalls.views.toolbar import FCToolbar
 from fivecalls.data import Issue
 from fivecalls.gsm_manager import SIM8XXManager
@@ -46,7 +46,7 @@ class CallView(Screen):
         contact_button.disabled = True
         self.layout.add_widget(contact_button)
 
-        self.call_button = FCListButton(text="Call")
+        self.call_button = RoundedListButton(text="Call")
         self.call_button.bind(on_press=self.call_button_pressed)
         self.layout.add_widget(self.call_button)
 

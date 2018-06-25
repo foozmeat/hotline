@@ -1,7 +1,7 @@
 from kivy.graphics.texture import Texture
 from kivy.graphics.vertex_instructions import Rectangle
 from kivy.metrics import sp
-from kivy.properties import StringProperty
+from kivy.properties import ListProperty, StringProperty
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 
@@ -94,6 +94,11 @@ class FCListButton(Button):
 
     def update_font_size(self, obj, value):
         self.font_size = sp(value)
+
+
+class RoundedListButton(FCListButton):
+    up_color = ListProperty([1, 0, 0, 1])
+    down_color = ListProperty([0, 1, 0, 1])
 
 
 class FCIssueButton(FCListButton):

@@ -2,3 +2,5 @@
 /.idea
 buildroot/.vagrant
 __pycache__
+/sandbox.py
+/sandbox.kv
