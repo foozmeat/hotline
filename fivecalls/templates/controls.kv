@@ -1,9 +1,40 @@
+<FCBaseLabel>:
+    font_size: sp(self.kc.font_size)
+    text_size: (self.kc.width, None)
+    size_hint_y: None
+    color: 0, 0, 0, 1
+
+<FCListLabel>:
+    padding: sp(20), sp(30)
+    bold: True
+    halign: 'center'
+
+<FCTextLabel>:
+    padding: sp(20), sp(20)
+
+<FCListButton>:
+    size_hint_y: None
+    halign: 'center'
+    padding: (sp(10), sp(10))
+    font_size: sp(self.kc.font_size)
+    text_size: (self.kc.width, None)
+
 <RoundedListButton>:
     background_color: 0,0,0,0  # the last zero is the critical on, make invisible
     canvas.before:
         Color:
             rgba: self.up_color if self.state=='normal' else self.down_color
         RoundedRectangle:
-            pos: self.pos
-            size: self.size
+            pos: self.pos[0] + sp(20), self.pos[1]
+            size: self.size[0] - sp(40), self.size[1]
             radius: [20,]
+
+<FCIssueButton>
+    color: 0, 0, 0, 1
+    background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+    canvas.before:
+        Color:
+            rgba: 1,1,1,1
+        Rectangle:
+            pos: self.pos[0] + sp(20), self.pos[1]
+            size: self.size[0] - sp(40), self.size[1]

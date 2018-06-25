@@ -18,5 +18,5 @@ class WelcomeScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.fcd = FiveCallsData()
-        self.ids.start_button.bind(on_press=button_callback)
+        self.ids.start_button.bind(on_release=button_callback)
         self.ids.calls_label.text = f"Together the 5 Calls community has contributed {self.fcd.global_count:,} calls!"

@@ -1,12 +1,19 @@
 <FCToolbar>:
-
     size_hint_y: None
+    canvas.before:
+        Color:
+            rgba: 247/255,231/255,0,1
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
     FCToolbarButton:
         id: back_button
         text: "< Back"
+        color: 0,0,0,1
         on_release: root.back_callback()
         on_height: root.height = args[1]
+        background_color: 0,0,0,0  # the last zero is the critical on, make invisible
 
 #    FCToolbarButton:
 #        id: font_size_button

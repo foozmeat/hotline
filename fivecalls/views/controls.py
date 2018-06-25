@@ -1,7 +1,7 @@
 from kivy.graphics.texture import Texture
 from kivy.graphics.vertex_instructions import Rectangle
 from kivy.metrics import sp
-from kivy.properties import ListProperty, StringProperty
+from kivy.properties import ListProperty, ObjectProperty, StringProperty
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 
@@ -36,24 +36,22 @@ def my_size_callback(obj, texture: Texture):
                 Rectangle(pos=obj.pos, size=obj.size)
 
 
+def update_font_size(obj, value):
+    obj.font_size = sp(value)
+
+
 #
 # Labels
 #
 
 class FCBaseLabel(Label):
+    kc = ObjectProperty(KivyConfig())
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.kc = KivyConfig()
-        self.font_size = sp(self.kc.font_size)
-        self.text_size = (self.kc.width, None)
-        self.size_hint_y = None
         self.bind(texture=my_height_callback)
-        self.kc.bind(font_size=self.update_font_size)
-        self.color = [0, 0, 0, 1]
-
-    def update_font_size(self, obj, value):
-        self.font_size = sp(value)
+        self.kc.bind(font_size=update_font_size)
 
 
 class FCListLabel(FCBaseLabel):
@@ -61,9 +59,6 @@ class FCListLabel(FCBaseLabel):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.padding = (sp(20), sp(30))
-        self.bold = True
-        self.halign = 'center'
 
 
 class FCTextLabel(FCBaseLabel):
@@ -71,7 +66,6 @@ class FCTextLabel(FCBaseLabel):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.padding = (sp(20), sp(20))
 
 
 #
@@ -79,26 +73,21 @@ class FCTextLabel(FCBaseLabel):
 #
 
 class FCListButton(Button):
+    kc = ObjectProperty(KivyConfig())
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.kc = KivyConfig()
-        self.font_size = sp(self.kc.font_size)
-        self.text_size = (self.kc.width, None)
-        self.size_hint_y = None
-        self.halign = 'center'
-        self.padding = (sp(10), sp(10))
 
         self.bind(texture=my_height_callback)
-        self.kc.bind(font_size=self.update_font_size)
-
-    def update_font_size(self, obj, value):
-        self.font_size = sp(value)
+        self.kc.bind(font_size=update_font_size)
 
 
 class RoundedListButton(FCListButton):
     up_color = ListProperty([1, 0, 0, 1])
     down_color = ListProperty([0, 1, 0, 1])
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
 
 class FCIssueButton(FCListButton):
@@ -114,11 +103,11 @@ class FCContactButton(Button):
     person_area = StringProperty()
     person_image = StringProperty()
     person_reason = StringProperty()
+    kc = ObjectProperty(KivyConfig())
 
     def __init__(self, contact: dict = None, issue: Issue = None, **kwargs):
         super().__init__(**kwargs)
 
-        self.kc = KivyConfig()
         self.issue = issue
         self.contact = contact
 
