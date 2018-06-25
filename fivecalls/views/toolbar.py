@@ -12,15 +12,15 @@ class FCToolbarButton(FCListButton):
     pass
 
 
-class FCSizePopup(Popup):
-
-    kc = ObjectProperty(KivyConfig())
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-    def size_change(self, value):
-        self.kc.font_size = value
+# class FCSizePopup(Popup):
+#
+#     kc = ObjectProperty(KivyConfig())
+#
+#     def __init__(self, **kwargs):
+#         super().__init__(**kwargs)
+#
+#     def size_change(self, value):
+#         self.kc.font_size = value
 
 
 class FCToolbar(BoxLayout):
@@ -52,6 +52,6 @@ class FCToolbar(BoxLayout):
     def on_back_label(self, instance, value):
         self.ids.back_button.text = value
 
-    def display_size_popover(self):
-        popup = FCSizePopup()
-        popup.open()
+    # def display_size_popover(self):
+    #     popup = FCSizePopup()
+    #     popup.open()
