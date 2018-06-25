@@ -29,12 +29,14 @@
             size: self.size[0] - sp(40), self.size[1]
             radius: [20,]
 
-<FCIssueButton>
-    color: 0, 0, 0, 1
-    background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+<FCHeaderLabel>:
+    bold: True
+    font_size: sp(30)
+    padding: sp(40), sp(30)
+
     canvas.before:
         Color:
-            rgba: 1,1,1,1
+            rgba: 247/255,231/255,0,1
         Rectangle:
-            pos: self.pos[0] + sp(20), self.pos[1]
-            size: self.size[0] - sp(40), self.size[1]
+            pos: self.pos
+            size: self.size

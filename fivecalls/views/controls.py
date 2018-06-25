@@ -68,6 +68,11 @@ class FCTextLabel(FCBaseLabel):
         super().__init__(**kwargs)
 
 
+class FCHeaderLabel(FCBaseLabel):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+
 #
 # Buttons
 #
@@ -90,12 +95,20 @@ class RoundedListButton(FCListButton):
         super().__init__(**kwargs)
 
 
-class FCIssueButton(FCListButton):
+class FCIssueButton(Button):
+    category = StringProperty()
+    name = StringProperty()
 
     def __init__(self, issue=None, **kwargs):
         super().__init__(**kwargs)
 
         self.issue = issue
+        self.category = self.issue.categories[0]['name']
+        self.name = self.issue.name
+
+    def on_issue(self, instance, issue):
+        self.ids.category_label.text = issue.categories[0]['name']
+        self.ids.name_label.text = issue.name
 
 
 class FCContactButton(Button):

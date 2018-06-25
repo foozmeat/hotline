@@ -1,0 +1,34 @@
+<FCIssueButton>:
+    size_hint_y: None
+    height: sp(110)
+    background_color: 0, 0, 0, 0
+    canvas.before:
+        Color:
+            rgba: 0.5, 0.5, 0.5, 1
+        Rectangle:
+            pos: self.pos[0] + sp(90), self.pos[1]
+            size: self.size[0], sp(3)
+
+    RelativeLayout:
+
+        pos: self.parent.pos
+        size: self.parent.size
+
+        Label:
+            id: category_label
+            text: root.category
+            font_size: sp(14)
+            pos: sp(90), sp(80)
+            size_hint: None, None
+            size: self.texture_size
+            color: .5, 0.5, 0.5, 1
+
+        Label:
+            text: root.name
+            bold: True
+            font_size: sp(18)
+            pos: sp(90), sp(15)
+            size_hint: None, None
+            size: self.texture_size
+            color: 0, 0, 0, 1
+            text_size: sp(350), None
