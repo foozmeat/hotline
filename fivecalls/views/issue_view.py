@@ -1,12 +1,13 @@
+from kivy.metrics import sp
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.scrollview import ScrollView
 
-from fivecalls.views.call_view import CallView
 from fivecalls.config import KivyConfig
-from fivecalls.views.controls import FCContactButton, FCListLabel, FCTextLabel
-from fivecalls.views.toolbar import FCToolbar
 from fivecalls.data import Issue
+from fivecalls.views.call_view import CallView
+from fivecalls.views.controls import FCCategoryLabel, FCContactButton, FCHeaderLabel, FCSectionLabel, FCTextLabel
+from fivecalls.views.toolbar import FCToolbar
 
 
 def button_callback(instance: FCContactButton):
@@ -31,24 +32,28 @@ class IssueView(Screen):
         self.layout = BoxLayout(
                 orientation='vertical',
                 size_hint_y=None,
-                spacing=10,
         )
         self.layout.bind(minimum_height=self.layout.setter('height'))
-
         self.t = FCToolbar()
         self.t.back_label = '< Issues'
         self.layout.add_widget(self.t)
 
-        self.layout.add_widget(FCListLabel(text=issue.name))
+        hl = FCHeaderLabel(text=issue.name)
+        hl.font_size = sp(30)
+        self.layout.add_widget(hl)
 
-        self.layout.add_widget(FCListLabel(text="Calls"))
+        c_label = FCCategoryLabel()
+        c_label.text = self.issue.categories[0]['name'].upper()
+        self.layout.add_widget(c_label)
+
+        self.layout.add_widget(FCSectionLabel(text="Calls"))
 
         for c in self.issue.contacts:
             c_button = FCContactButton(issue=self.issue, contact=c)
             c_button.bind(on_press=button_callback)
             self.layout.add_widget(c_button)
 
-        self.layout.add_widget(FCListLabel(text="Background"))
+        self.layout.add_widget(FCSectionLabel(text="Background"))
 
         self.layout.add_widget(FCTextLabel(text=issue.reason))
 

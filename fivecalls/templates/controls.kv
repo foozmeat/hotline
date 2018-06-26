@@ -10,7 +10,47 @@
     halign: 'center'
 
 <FCTextLabel>:
-    padding: sp(20), sp(20)
+    padding: sp(40), sp(20)
+
+<FCSectionLabel>:
+    halign: 'left'
+    bold: True
+    font_size: sp(20)
+    padding: sp(40), sp(20)
+    size_hint: None, None
+    size: self.texture_size
+    color: .6, 0.6, 0.6, 1
+
+<FCHeaderLabel>:
+    bold: True
+    font_size: sp(40)
+    padding: sp(40), sp(20)
+    canvas.before:
+        Color:
+            rgba: 247/255,231/255,0,1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<FCCategoryLabel>:
+    font_size: sp(16)
+    color: 1,1,1,1
+    size_hint: None, None
+    pos: sp(50), self.pos[1]
+    size: self.texture_size
+    canvas.before:
+        Color:
+            rgba: 247/255,231/255,0,1
+        Rectangle:
+            pos: self.pos[0] - sp(50), self.pos[1] - sp(20)
+            size: sp(480), sp(40)
+        Color:
+            rgba: [0,0,0,1]
+        RoundedRectangle:
+            pos: self.pos[0] - sp(10), self.pos[1] - sp(5)
+            size: self.size[0] + sp(20), self.size[1] + sp(10)
+            radius: [20,]
+
 
 <FCListButton>:
     size_hint_y: None
@@ -20,23 +60,12 @@
     text_size: (self.kc.width, None)
 
 <RoundedListButton>:
-    background_color: 0,0,0,0  # the last zero is the critical on, make invisible
+    background_color: 0,0,0,0
     canvas.before:
         Color:
             rgba: self.up_color if self.state=='normal' else self.down_color
         RoundedRectangle:
-            pos: self.pos[0] + sp(20), self.pos[1]
-            size: self.size[0] - sp(40), self.size[1]
+            pos: self.pos[0] + sp(40), self.pos[1]
+            size: self.size[0] - sp(80), self.size[1]
             radius: [20,]
 
-<FCHeaderLabel>:
-    bold: True
-    font_size: sp(40)
-    padding: sp(40), sp(20)
-
-    canvas.before:
-        Color:
-            rgba: 247/255,231/255,0,1
-        Rectangle:
-            pos: self.pos
-            size: self.size

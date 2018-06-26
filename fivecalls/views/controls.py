@@ -73,6 +73,20 @@ class FCHeaderLabel(FCBaseLabel):
         super().__init__(**kwargs)
 
 
+class FCSectionLabel(Label):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def on_text(self, instance, value):
+        self.text = value.upper()
+
+
+class FCCategoryLabel(Label):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+
 #
 # Buttons
 #
