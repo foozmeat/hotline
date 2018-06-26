@@ -103,7 +103,7 @@ class FCIssueButton(Button):
         super().__init__(**kwargs)
 
         self.issue = issue
-        self.category = self.issue.categories[0]['name']
+        self.category = self.issue.categories[0]['name'].upper()
         self.name = self.issue.name
 
     def on_issue(self, instance, issue):
