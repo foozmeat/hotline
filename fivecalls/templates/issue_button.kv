@@ -4,15 +4,21 @@
     background_color: 0, 0, 0, 0
     canvas.before:
         Color:
-            rgba: 0.5, 0.5, 0.5, 1
+            rgba: 0.3, 0.3, 0.3, .5
         Rectangle:
             pos: self.pos[0] + sp(90), self.pos[1]
-            size: self.size[0], sp(3)
+            size: self.size[0], sp(1)
 
     RelativeLayout:
 
         pos: self.parent.pos
         size: self.parent.size
+
+        Image:
+            source: "images/empty_checkbox.png"
+            size: self.texture_size
+            size_hint: None, None
+            pos: sp(20), sp(30)
 
         Label:
             id: category_label
