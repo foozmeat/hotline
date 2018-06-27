@@ -1,3 +1,6 @@
+#:set SIDE_PADDING sp(40)
+#:set TOP_PADDING sp(20)
+
 <FCBaseLabel>:
     font_size: sp(self.kc.font_size)
     text_size: (self.kc.width, None)
@@ -10,21 +13,27 @@
     halign: 'center'
 
 <FCTextLabel>:
-    padding: sp(40), sp(20)
+    padding: SIDE_PADDING, TOP_PADDING
 
 <FCSectionLabel>:
     halign: 'left'
     bold: True
     font_size: sp(20)
-    padding: sp(40), sp(20)
+    padding: SIDE_PADDING, TOP_PADDING
     size_hint: None, None
     size: self.texture_size
     color: .6, 0.6, 0.6, 1
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 0.2
+        Rectangle:
+            pos: SIDE_PADDING, self.pos[1]
+            size: sp(400), sp(1)
 
 <FCHeaderLabel>:
     bold: True
     font_size: sp(40)
-    padding: sp(40), sp(20)
+    padding: SIDE_PADDING, TOP_PADDING
     canvas.before:
         Color:
             rgba: 247/255,231/255,0,1

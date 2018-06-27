@@ -1,46 +1,37 @@
+#:set SIDE_PADDING sp(40)
+#:set TOP_PADDING sp(20)
+
 <FCContactButton>:
     size_hint_y: None
-    height: sp(100)
+    height: sp(80)
+    background_color: 0, 0, 0, 0
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 0.2
+        Rectangle:
+            pos: SIDE_PADDING * 3, self.pos[1]
+            size: root.width - (SIDE_PADDING * 4), sp(1)
 
     RelativeLayout:
 
         pos: self.parent.pos
         size: self.parent.size
 
-        Image:
-            id: img
-            source: root.person_image
-
-            size_hint_y: None
-            size_hint_x: None
-            height: self.parent.height - sp(20)
-            width: self.parent.height * self.image_ratio
-            y: sp(10)
-            allow_stretch: True
-            keep_ratio: True
-
         Label:
 
             text: root.person_name
             font_size: sp(20)
             bold: True
-            pos: sp(90), sp(70)
+            pos: SIDE_PADDING * 3, self.parent.height - sp(40)
             size_hint: None, None
             size: self.texture_size
+            color: 0, 0, 0, 1
 
         Label:
 
             text: root.person_area
             font_size: sp(18)
-            pos: sp(90), sp(40)
+            pos: SIDE_PADDING * 3, self.parent.height - sp(60)
             size_hint: None, None
             size: self.texture_size
-
-        Label:
-
-            text: root.person_reason
-            font_size: sp(18)
-            pos: sp(90), sp(10)
-            size_hint: None, None
-            size: self.texture_size
-
+            color: 0, 0, 0, 1
