@@ -1,5 +1,12 @@
 #:set SIDE_PADDING sp(40)
 #:set TOP_PADDING sp(20)
+<Widget>:
+    canvas.before:
+        Color:
+            rgba: 1,0,0,1
+        Line:
+            points: self.x, self.y , self.x + self.width, self.y , self.x + self.width, self.y + self.height, self.x, self.y + self.height
+            width: 2
 
 <FCBaseLabel>:
     font_size: sp(self.kc.font_size)
