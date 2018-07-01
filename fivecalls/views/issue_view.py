@@ -46,7 +46,8 @@ class IssueView(Screen):
         c_label.text = self.issue.categories[0]['name'].upper()
         self.layout.add_widget(c_label)
 
-        self.layout.add_widget(FCSectionLabel(text="Calls"))
+        # newline added to push 'calls' down a bit
+        self.layout.add_widget(FCSectionLabel(text="\nCalls"))
 
         for c in self.issue.contacts:
             c_button = FCContactButton(issue=self.issue, contact=c)

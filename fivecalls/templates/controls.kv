@@ -7,6 +7,8 @@
         Line:
             points: self.x, self.y , self.x + self.width, self.y , self.x + self.width, self.y + self.height, self.x, self.y + self.height
             width: 2
+#:set YELLOW 247/255,231/255,0,1
+
 
 <FCBaseLabel>:
     font_size: sp(self.kc.font_size)
@@ -43,7 +45,7 @@
     padding: SIDE_PADDING, TOP_PADDING
     canvas.before:
         Color:
-            rgba: 247/255,231/255,0,1
+            rgba: YELLOW
         Rectangle:
             pos: self.pos
             size: self.size
@@ -56,7 +58,7 @@
     size: self.texture_size
     canvas.before:
         Color:
-            rgba: 247/255,231/255,0,1
+            rgba: YELLOW
         Rectangle:
             pos: self.pos[0] - sp(50), self.pos[1] - sp(20)
             size: sp(480), sp(40)
