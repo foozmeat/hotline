@@ -1,18 +1,16 @@
 from kivy.clock import Clock
-from kivy.core.window import Window
-from kivy.metrics import sp
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import Screen
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.widget import Widget
 
 from fivecalls.config import KivyConfig
-from fivecalls.views.controls import FCTextLabel, FCListButton, FCContactButton, RoundedListButton
-from fivecalls.views.toolbar import FCToolbar
 from fivecalls.data import Issue
 from fivecalls.gsm_manager import SIM8XXManager
+from fivecalls.views.controls import FCContactCard, FCListButton, FCTextLabel, RoundedListButton
+from fivecalls.views.toolbar import FCToolbar
+
 
 class OutcomeButton(FCListButton):
     def __init__(self, **kwargs):
@@ -42,7 +40,7 @@ class CallView(Screen):
 
         self.layout.add_widget(FCToolbar())
 
-        contact_button = FCContactButton(contact=self.contact)
+        contact_button = FCContactCard(contact=self.contact)
         contact_button.disabled = True
         self.layout.add_widget(contact_button)
 

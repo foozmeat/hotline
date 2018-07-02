@@ -6,7 +6,8 @@ from kivy.uix.scrollview import ScrollView
 from fivecalls.config import KivyConfig
 from fivecalls.data import Issue
 from fivecalls.views.call_view import CallView
-from fivecalls.views.controls import FCCategoryLabel, FCContactButton, FCHeaderLabel, FCSectionLabel, FCTextLabel
+from fivecalls.views.controls import FCCategoryLabel, FCContactButton, FCHeaderLabel, FCSectionLabel, FCTextLabel, \
+    FCSectionLabelWithBorder, FCContactButtonWithBorder
 from fivecalls.views.toolbar import FCToolbar
 
 
@@ -47,10 +48,10 @@ class IssueView(Screen):
         self.layout.add_widget(c_label)
 
         # newline added to push 'calls' down a bit
-        self.layout.add_widget(FCSectionLabel(text="\nCalls"))
+        self.layout.add_widget(FCSectionLabelWithBorder(text="\nCalls"))
 
         for c in self.issue.contacts:
-            c_button = FCContactButton(issue=self.issue, contact=c)
+            c_button = FCContactButtonWithBorder(issue=self.issue, contact=c)
             c_button.bind(on_press=button_callback)
             self.layout.add_widget(c_button)
 

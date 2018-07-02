@@ -4,6 +4,7 @@ from kivy.metrics import sp
 from kivy.properties import ListProperty, ObjectProperty, StringProperty
 from kivy.uix.button import Button
 from kivy.uix.label import Label
+from kivy.uix.widget import Widget
 
 from fivecalls.config import KivyConfig
 from fivecalls.data import IMAGE_PATH, Issue
@@ -81,6 +82,11 @@ class FCSectionLabel(Label):
         self.text = value.upper()
 
 
+class FCSectionLabelWithBorder(FCSectionLabel):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+
 class FCCategoryLabel(Label):
 
     def __init__(self, **kwargs):
@@ -126,6 +132,29 @@ class FCIssueButton(Button):
 
 
 class FCContactButton(Button):
+    person_name = StringProperty()
+    person_area = StringProperty()
+    person_image = StringProperty()
+    person_reason = StringProperty()
+    kc = ObjectProperty(KivyConfig())
+
+    def __init__(self, contact: dict = None, issue: Issue = None, **kwargs):
+        super().__init__(**kwargs)
+
+        self.issue = issue
+        self.contact = contact
+
+        self.person_name = contact['name']
+        self.person_image = IMAGE_PATH + contact['id'] + '.jpg'
+        self.person_area = contact['area']
+        self.person_reason = contact['reason']
+
+
+class FCContactButtonWithBorder(FCContactButton):
+    pass
+
+
+class FCContactCard(Widget):
     person_name = StringProperty()
     person_area = StringProperty()
     person_image = StringProperty()

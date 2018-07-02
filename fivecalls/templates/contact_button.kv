@@ -5,17 +5,18 @@
     size_hint_y: None
     height: sp(80)
     background_color: 0, 0, 0, 0
-    canvas.before:
-        Color:
-            rgba: 0, 0, 0, 0.2
-        Rectangle:
-            pos: SIDE_PADDING * 3, self.pos[1]
-            size: root.width - (SIDE_PADDING * 4), sp(1)
 
     RelativeLayout:
 
         pos: self.parent.pos
         size: self.parent.size
+
+        Image:
+            source: "images/call_checkbox.png"
+            size: self.texture_size
+            size_hint: None, None
+            height: self.parent.height
+            pos: sp(50), 0
 
         Label:
 
@@ -34,4 +35,61 @@
             pos: SIDE_PADDING * 3, self.parent.height - sp(60)
             size_hint: None, None
             size: self.texture_size
+            color: .6, 0.6, 0.6, 1
+
+<FCContactButtonWithBorder>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 0.2
+        Rectangle:
+            pos: SIDE_PADDING * 3, self.pos[1]
+            size: root.width - (SIDE_PADDING * 4), sp(1)
+
+<FCContactCard>:
+    size_hint_y: None
+    height: sp(80)
+    background_color: 0, 0, 0, 0
+
+    RelativeLayout:
+
+        pos: self.parent.pos
+        size: self.parent.size
+
+        Image:
+            source: root.person_image
+
+            size_hint: None, None
+            height: self.parent.height
+            width: self.parent.height * self.image_ratio
+            x: SIDE_PADDING
+            y: 0 - (self.height - self.width) / 2
+            allow_stretch: True
+            keep_ratio: True
+            canvas.before:
+                StencilPush:
+                Ellipse:
+                    size: self.width, self.width
+                    pos: self.x, self.y + (self.height - self.width)
+                StencilUse:
+            canvas.after:
+                StencilUnUse:
+                StencilPop:
+
+        Label:
+
+            text: root.person_name
+            font_size: sp(20)
+            bold: True
+            pos: SIDE_PADDING * 3, self.parent.height - sp(40)
+            size_hint: None, None
+            size: self.texture_size
             color: 0, 0, 0, 1
+
+        Label:
+
+            text: root.person_area
+            font_size: sp(18)
+            pos: SIDE_PADDING * 3, self.parent.height - sp(60)
+            size_hint: None, None
+            size: self.texture_size
+            color: .6, 0.6, 0.6, 1
