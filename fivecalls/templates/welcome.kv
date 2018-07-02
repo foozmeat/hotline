@@ -1,13 +1,43 @@
 <WelcomeScreen>:
 
-    StackLayout:
-        FCToolbar:
-            back_hidden: True
+    RelativeLayout:
+
         FCTextLabel:
+            id: header
+            halign: "center"
+            bold: True
+            font_size: sp(25)
             text: "MAKE YOUR VOICE HEARD\n\nCalling is the most effective way to influence your representatives."
+            size: self.texture_size
+            pos: 0, root.height - self.height
+
         FCTextLabel:
             id: calls_label
+            halign: "center"
+            size: self.texture_size
+            size_hint: None, None
+            width: self.parent.width - sp(80)
+            pos: sp(40), header.pos[1] - self.height
+
+        FCTextLabel:
+            id: pb_label
+            halign: "center"
+            text: "Powered by 5calls.org. Please visit 5calls on your phone so you can make calls anytime."
+            size: self.texture_size
+            size_hint: None, None
+            width: self.parent.width - sp(80)
+            pos: sp(40), calls_label.pos[1] - self.height
+
+        Image:
+            id: image
+            source: "images/5calls-logotype.png"
+            size: self.texture_size
+            size_hint: None, None
+            width: self.parent.width - sp(80)
+            pos: sp(40), pb_label.pos[1] - self.height
+
         RoundedListButton:
             id: start_button
             text:"Get Started"
             up_color: 24/255, 187/255, 0, 1
+            y: sp(40)
