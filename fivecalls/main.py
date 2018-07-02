@@ -15,6 +15,7 @@ Builder.load_file('fivecalls/templates/contact_button.kv')
 Builder.load_file('fivecalls/templates/toolbar.kv')
 Builder.load_file('fivecalls/templates/welcome.kv')
 Builder.load_file('fivecalls/templates/issue_button.kv')
+Builder.load_file('fivecalls/templates/call_button.kv')
 
 
 class FiveCallsApp(App):

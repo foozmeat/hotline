@@ -8,6 +8,7 @@ from kivy.uix.widget import Widget
 from fivecalls.config import KivyConfig
 from fivecalls.data import Issue
 from fivecalls.gsm_manager import SIM8XXManager
+from fivecalls.views.call_button import CallButton
 from fivecalls.views.controls import FCContactCard, FCListButton, FCTextLabel, RoundedListButton
 from fivecalls.views.toolbar import FCToolbar
 
@@ -44,7 +45,7 @@ class CallView(Screen):
         contact_button.disabled = True
         self.layout.add_widget(contact_button)
 
-        self.call_button = RoundedListButton(text="Call")
+        self.call_button = CallButton()
         self.call_button.bind(on_press=self.call_button_pressed)
         self.layout.add_widget(self.call_button)
 
@@ -84,23 +85,19 @@ class CallView(Screen):
 
         if self.phone.status == 0:
             # Call has ended
-            self.call_button.text = "Call"
-            self.call_button.disabled = False
+            self.call_button.set_call()
             return False
 
         elif self.phone.status == 2:
-            self.call_button.text = "Ringing…"
-            self.call_button.disabled = True
+            self.call_button.set_ringing()
             return True
 
         elif self.phone.status == 3:
-            self.call_button.text = "Ringing…"
-            self.call_button.disabled = True
+            self.call_button.set_ringing()
             return True
 
         elif self.phone.status == 4:
-            self.call_button.text = "Hang Up"
-            self.call_button.disabled = False
+            self.call_button.set_hang_up()
             return True
 
 
