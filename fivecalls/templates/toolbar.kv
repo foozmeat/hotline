@@ -1,3 +1,11 @@
+<FCToolbarButton>:
+    background_color: 0,0,0,0
+    color: 0,0,0,1
+    size_hint: None, None
+    size: self.texture_size[0], sp(50)
+    padding: sp(20), sp(10)
+    font_size: sp(25)
+
 <FCToolbar>:
     size_hint_y: None
     canvas.before:
@@ -9,13 +17,15 @@
 
     FCToolbarButton:
         id: back_button
-        halign: 'left'
         text: "< Back"
-        color: 0,0,0,1
         on_release: root.back_callback()
-        on_height: root.height = args[1]
-        background_color: 0,0,0,0
 
+    Label:
+
+    FCToolbarButton:
+        id: home_button
+        text: "Home"
+        on_release: root.home_callback()
 #    FCToolbarButton:
 #        id: font_size_button
 #        text: "Size"

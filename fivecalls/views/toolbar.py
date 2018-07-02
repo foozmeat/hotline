@@ -1,15 +1,13 @@
-from kivy.properties import ObjectProperty, BooleanProperty, StringProperty
+from kivy.properties import BooleanProperty, StringProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
-from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager
 
-from fivecalls.config import KivyConfig
-from fivecalls.views.controls import FCListButton
 
+class FCToolbarButton(Button):
 
-class FCToolbarButton(FCListButton):
-    pass
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
 
 # class FCSizePopup(Popup):
@@ -24,12 +22,14 @@ class FCToolbarButton(FCListButton):
 
 
 class FCToolbar(BoxLayout):
-
     back_hidden = BooleanProperty(False)
     back_label = StringProperty()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+        self.bind(minimum_height=self.setter('height'),
+                  minimum_width=self.setter('width'))
 
     def on_back_hidden(self, instance, value):
         if value:
@@ -55,3 +55,15 @@ class FCToolbar(BoxLayout):
     # def display_size_popover(self):
     #     popup = FCSizePopup()
     #     popup.open()
+
+    def home_callback(self):
+        sm = self.get_root_window().children[0]  # type: ScreenManager
+        sm.transition.direction = 'right'
+
+        for c in sm.screen_names:
+            w = sm.get_screen(c)
+            if 'dynamic' in c:
+                sm.remove_widget(w)
+
+        from fivecalls.views.welcome import WELCOME_SCREEN
+        sm.current = WELCOME_SCREEN
