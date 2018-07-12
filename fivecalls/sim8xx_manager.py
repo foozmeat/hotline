@@ -61,7 +61,7 @@ class SIM8XXManager(metaclass=Singleton):
                 time.sleep(3)
 
             if not self.is_powered_on():
-                print(f"Unable to open serial connection: {result}")
+                print(f"Unable to open serial connection")
                 return False
 
             # if not LINUX:
