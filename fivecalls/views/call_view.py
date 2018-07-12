@@ -7,7 +7,7 @@ from kivy.uix.widget import Widget
 
 from fivecalls.config import KivyConfig
 from fivecalls.data import Issue
-from fivecalls.gsm_manager import SIM8XXManager
+from fivecalls.sim8xx_manager import SIM8XXManager
 from fivecalls.views.call_button import CallButton
 from fivecalls.views.controls import FCContactCard, FCListButton, FCTextLabel
 from fivecalls.views.toolbar import FCToolbar

@@ -4,7 +4,7 @@ Provides a layer of indirection for web requests.
 import sys
 import requests
 
-from fivecalls.gsm_manager import SIM8XXManager
+from fivecalls.sim8xx_manager import SIM8XXManager
 
 
 def http_get_json(url, params={}):
