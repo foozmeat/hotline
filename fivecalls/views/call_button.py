@@ -20,6 +20,7 @@ class CallButton(Button):
         self.bind(pos=self.update_rect,
                   size=self.update_rect)
         self.set_call()
+        self.height = sp(50)
 
     def set_background(self, color):
         # self.canvas.before.clear()
