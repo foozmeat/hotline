@@ -1,6 +1,8 @@
 from kivy.clock import Clock
+from kivy.metrics import sp
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import Screen
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.widget import Widget
@@ -9,16 +11,8 @@ from fivecalls.config import KivyConfig
 from fivecalls.data import Issue
 from fivecalls.sim8xx_manager import SIM8XXManager
 from fivecalls.views.call_button import CallButton
-from fivecalls.views.controls import FCContactCard, FCListButton, FCTextLabel
+from fivecalls.views.controls import FCContactCard, FCTextLabel, OutcomeButton
 from fivecalls.views.toolbar import FCToolbar
-
-
-class OutcomeButton(FCListButton):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-    def on_press(self):
-        super().on_press()
 
 
 class CallView(Screen):
@@ -52,21 +46,14 @@ class CallView(Screen):
         reason_label = FCTextLabel(text=issue.script)
         self.layout.add_widget(reason_label)
 
-        button_layout = GridLayout(cols=2, size_hint_y=None)
-        button_layout.bind(minimum_height=button_layout.setter('height'))
-
-        for model in issue.outcomeModels:
-            b = OutcomeButton(
-                    text=model['label'].title(),
-            )
-            button_layout.add_widget(b)
-        self.layout.add_widget(button_layout)
-
         self.scrollview = ScrollView(
                 do_scroll_x=False,
         )
         self.scrollview.add_widget(self.layout)
         self.add_widget(self.scrollview)
+
+        self.outcome_popup = OutcomePopup(issue=issue)
+        self.outcome_popup.open()
 
     def call_button_pressed(self, obj: Widget):
 
@@ -78,6 +65,7 @@ class CallView(Screen):
             Clock.schedule_interval(self.update_call_status, 0.5)
         else:
             self.phone.hang_up()
+            self.outcome_popup.open()
 
     def update_call_status(self, dt):
 
@@ -101,3 +89,26 @@ class CallView(Screen):
             return True
 
 
+class OutcomePopup(Popup):
+    def __init__(self, issue: Issue = None, **kwargs):
+        super().__init__(**kwargs)
+        self.issue = issue
+        self.kc = KivyConfig()
+
+        self.title = "Select Outcome"
+        self.title_align = 'center'
+        self.size_hint = 0.8, 0.25
+        self.background = 'images/modalview-background.png'
+        self.title_color = 0, 0, 0, 1
+        self.separator_color = 1, 1, 1, 1
+        self.title_size = sp(self.kc.font_size)
+
+        button_layout = GridLayout(cols=2, size_hint_y=None, spacing=[sp(10), sp(10)])
+        button_layout.bind(minimum_height=button_layout.setter('height'))
+
+        for model in issue.outcomeModels:
+            b = OutcomeButton(
+                    text=model['label'].title(),
+            )
+            button_layout.add_widget(b)
+        self.content = button_layout

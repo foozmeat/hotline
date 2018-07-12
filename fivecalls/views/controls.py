@@ -171,3 +171,11 @@ class FCContactCard(Widget):
         self.person_image = IMAGE_PATH + contact['id'] + '.jpg'
         self.person_area = contact['area']
         self.person_reason = contact['reason']
+
+
+class OutcomeButton(FCListButton):
+    up_color = ListProperty([1, 0, 0, 1])
+    down_color = ListProperty([0, 1, 0, 1])
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)

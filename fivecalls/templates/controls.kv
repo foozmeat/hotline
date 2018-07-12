@@ -1,6 +1,8 @@
 #:set SIDE_PADDING sp(40)
 #:set TOP_PADDING sp(20)
 #:set YELLOW 247/255,231/255,0,1
+#:set BLUE 0, 118 / 255, 1, 1
+#:set GRAY 0, 0, 0, 0.5
 
 #<Widget>:
 #    canvas.after:
@@ -89,3 +91,12 @@
             size: self.size[0] - sp(80), self.size[1]
             radius: [20,]
 
+<OutcomeButton>:
+    background_color: 0,0,0,0
+    canvas.before:
+        Color:
+            rgba: BLUE if self.state=='normal' else GRAY
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [20,]
