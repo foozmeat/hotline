@@ -5,8 +5,9 @@ name = "pypi"
 
 [packages]
 requests = "*"
-cython = "==0.25.2"
-kivy = {file = "https://github.com/kivy/kivy/archive/master.zip"}
+cython = "==0.28.3"
+#kivy = {file = "https://github.com/kivy/kivy/archive/master.zip"}
+kivy = "==1.10.1"
 pyserial = "*"
 'RPi.GPIO'  = {version = "*", sys_platform = "== 'linux'"}
 
