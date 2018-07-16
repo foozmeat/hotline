@@ -1,3 +1,6 @@
 #!/bin/sh
 
-make BR2_EXTERNAL=/opt/hotline/buildroot/hotline-external BR2_DL_DIR=$HOME/dl hotline-rpi_defconfig
+export BR2_DL_DIR=${HOME}/dl
+export BR2_EXTERNAL=/opt/hotline/buildroot/hotline-external
+
+make hotline-rpi_defconfig
