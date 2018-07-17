@@ -1,1 +1,2 @@
 source "$BR2_EXTERNAL_HOTLINE_PATH/package/python-kivy/Config.in"
+source "$BR2_EXTERNAL_HOTLINE_PATH/package/python-cython-hotline/Config.in.host"

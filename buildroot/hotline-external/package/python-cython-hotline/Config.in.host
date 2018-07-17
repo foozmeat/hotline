@@ -1,0 +1,7 @@
+config BR2_PACKAGE_HOST_PYTHON_CYTHON_HOTLINE
+	bool "host python-cython-hotline"
+	help
+	  The Cython compiler for writing C extensions for the Python
+	  language.
+
+	  http://cython.org/

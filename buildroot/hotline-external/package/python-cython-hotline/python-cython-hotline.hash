@@ -1,0 +1,6 @@
+# md5 from https://pypi.python.org/pypi/Cython/json, sha256 locally computed
+md5    0e0568d6bed4b09ad01afe0a38805305  Cython-0.28.2.tar.gz
+sha256 634e2f10fc8d026c633cffacb45cd8f4582149fa68e1428124e762dbc566e68a  Cython-0.28.2.tar.gz
+# License files, locally calculated
+sha256 a6cba85bc92e0cff7a450b1d873c0eaa2e9fc96bf472df0247a26bec77bf3ff9  LICENSE.txt
+sha256 e1eb1c49a8508e8173dac30157e4a6439a44ad8846194746c424fbc3fc2b95d7  COPYING.txt
