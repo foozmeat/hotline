@@ -1,0 +1,47 @@
+---
+
+- name: Set pi shell
+  user:
+    name: pi
+    shell: /usr/bin/zsh
+  ignore_errors: true
+
+- name: Set root shell
+  user:
+    name: root
+    shell: /usr/bin/zsh
+  ignore_errors: true
+
+- name: Install required packages
+  apt:
+    state: latest
+    pkg: "{{ item }}"
+  with_items: "{{ dotfiles_required_packages }}"
+
+- name: Install root .dotfiles
+  git:
+    repo: "{{ dotfiles__repo_url }}"
+    dest: /root/.dotfiles
+    recursive: yes
+    update: yes
+    force: yes
+
+- name: Set up root .dotfiles
+  command: ./setup.py
+  args:
+    chdir: '/root/.dotfiles'
+
+- name: Install pi .dotfiles
+  become_user: pi
+  git:
+    repo: "{{ dotfiles__repo_url }}"
+    dest: "/home/pi/.dotfiles"
+    recursive: yes
+    update: yes
+    force: yes
+
+- name: Set up pi .dotfiles
+  become_user: pi
+  command: ./setup.py
+  args:
+    chdir: '/home/pi/.dotfiles'

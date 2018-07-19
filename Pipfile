@@ -14,6 +14,7 @@ pyserial = "*"
 [dev-packages]
 mypy = "*"
 pyinstaller = "*"
+ansible = "*"
 
 [requires]
 python_version = "3.6"

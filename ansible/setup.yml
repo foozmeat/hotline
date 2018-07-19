@@ -1,0 +1,8 @@
+- hosts: all
+  become: yes
+
+  roles:
+    - { role: setup, tags: ["setup"] }
+    - { role: dotfiles, tags: ["dotfiles"] }
+    - { role: python3, tags: ["python3"] }
+    - { role: hotline, tags: ["hotline"] }

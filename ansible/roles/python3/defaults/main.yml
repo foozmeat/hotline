@@ -1,0 +1,32 @@
+---
+
+python__version: 3.6.6
+python__archive_name: "Python-{{ python__version }}.tgz"
+python__source_url: "https://www.python.org/ftp/python/{{ python__version }}/{{ python__archive_name }}"
+
+python__packages:
+  - bzip2
+  - gcc
+  - libffi6
+  - libffi6-dbg
+  - libgpm2
+  - mime-support
+  - net-tools
+  - netbase
+  - quilt
+
+python__dev_packages:
+  - autotools-dev
+  - blt-dev
+  - dpkg-dev
+  - libbz2-dev
+  - libexpat1-dev
+  - libffi-dev
+  - libgdbm-dev
+  - liblzma-dev
+  - libncursesw5-dev
+  - libreadline-dev
+  - libsqlite3-dev
+  - libssl-dev
+  - libtinfo-dev
+  - zlib1g-dev

@@ -1,0 +1,6 @@
+python__install_path: /opt/python3.6
+python__executable: python3.6
+python__pip_executable: pip3.6
+python__python: "{{ python__install_path }}/bin/{{ python__executable }}"
+python__pip: "{{ python__install_path }}/bin/{{ python__pip_executable }}"
+python__virtualenv: "{{ python__python }} -m venv"

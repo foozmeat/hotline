@@ -1,0 +1,32 @@
+---
+dotfiles_required_packages:
+  - zsh
+  - git
+  - php-cli
+  - htop
+  - zsh
+  - multitail
+
+dotfiles__files_to_remove:
+  - .lldbinit
+  - .subversion
+  - '.zcompdump*'
+  - '.zgen'
+  - '.antigen'
+  - .zsh-update
+  - '.dotfiles/pug'
+  - '.dotfiles/zgen'
+  - .bash_history
+  - .bash_logout
+  - .bashrc
+  - .gemrc
+  - .gem
+  - .gitignore
+  - .irbrc
+  - .nanorc
+  - .profile
+  - .tmux.conf
+  - .zshenv
+  - .zshrc
+
+dotfiles__repo_url: https://github.com/foozmeat/dotfiles.git

@@ -1,0 +1,4 @@
+packages_to_remove:
+  - triggerhappy
+  - bluez
+  - rpcbind

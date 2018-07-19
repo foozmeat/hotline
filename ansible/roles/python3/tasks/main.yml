@@ -1,0 +1,54 @@
+---
+
+- name: check for python3 install
+  stat: path="{{ python__python }}"
+  register: python3_executable
+  tags: always
+
+- block:
+
+  - name: install dev packages
+    apt:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - "{{python__packages}}"
+      - "{{python__dev_packages}}"
+
+  - name: download python3 source
+    get_url: 
+      url: '{{python__source_url}}' 
+      dest: '/tmp/'
+
+  - name: unarchive python3
+    unarchive: 
+      src: '/tmp/{{ python__archive_name }}' 
+      dest: '/tmp/' 
+      copy: no
+
+  - name: build and install python3
+    command: "{{ item }}"
+    args:
+      chdir: "/tmp/Python-{{ python__version }}"
+    with_items:
+      - "./configure --with-ssl --prefix={{ python__install_path }}"
+      - make
+      - make altinstall
+
+  - name: remove dev packages
+    apt:
+      name: "{{python__dev_packages}}"
+      state: absent
+
+  when: python3_executable.stat.exists == False or lookup('env', 'PYTHON_UPDATE')
+  tags: python-upgrade
+
+- name: install links
+  file:
+    src: "{{ python__install_path }}/bin/{{ item }}"
+    dest: "/usr/bin/{{ item }}"
+    state: link
+  with_items:
+    - "{{ python__executable }}"
+    - "{{ python__pip_executable }}"
+

@@ -1,0 +1,64 @@
+- name: install packages
+  apt:
+    state: present
+    name: "{{ item }}"
+  with_items:
+    - libmtdev1
+    - libsdl2-dev
+    - libsdl2-image-dev
+    - libsdl2-mixer-dev
+    - libsdl2-ttf-dev
+    - pkg-config
+#    - libgl1-mesa-dev
+#    - libgles2-mesa-dev
+#    - libgstreamer1.0-dev
+    - git-core
+#    - gstreamer1.0-plugins-{bad,base,good,ugly}
+#    - gstreamer1.0-{omx,alsa} libmtdev-dev libmtdev1
+    - minicom
+    - ppp
+
+- name: Install pipenv
+  pip:
+    name: pipenv
+    state: latest
+    executable: /opt/python3.6/bin/pip3.6
+
+- name: fix permission on /opt
+  file:
+    path: /opt
+    owner: pi
+    state: directory
+
+- name: check out code
+  become_user: pi
+  git:
+    repo: https://github.com/foozmeat/hotline.git
+    dest: /opt/hotline
+  register: git_pull
+
+- name: check for existing venv
+  become_user: pi
+  command: /opt/python3.6/bin/pipenv --venv
+  args:
+    chdir: /opt/hotline
+  register: existing_venv
+
+- name: setup hotline venv
+  become_user: pi
+  command: /opt/python3.6/bin/pipenv --python /opt/python3.6/bin/python3.6
+  args:
+    chdir: /opt/hotline
+  when: existing_venv.rc != 0
+
+- name: install hotline packages
+  become_user: pi
+  command: /opt/python3.6/bin/pipenv install
+  args:
+    chdir: /opt/hotline
+
+- name: install ppp config
+  copy:
+    src: sim8xx
+    dest: /etc/ppp/peers/
+  tags: ppp

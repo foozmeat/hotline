@@ -1,0 +1,54 @@
+- name: remove packages
+  apt:
+    state: absent
+    name: "{{ item }}"
+  with_items: "{{ packages_to_remove }}"
+
+- name: Ensure en_GB.UTF-8 locale is removed
+  locale_gen:
+    name: en_GB.UTF-8
+    state: absent
+  tags: locale
+
+- name: Ensure en_US.UTF-8 locale exists
+  locale_gen:
+    name: en_US.UTF-8
+    state: present
+  register: locale
+  tags: locale
+
+- name: rebuild locales
+  command: "{{ item }}"
+  with_items:
+    - locale-gen
+    - update-locale LANG=en_US.UTF-8
+  tags: locale
+  when: locale.changed
+
+- name: update boot config
+  copy:
+    src: "{{ item }}"
+    dest: /boot/
+  with_items:
+    - cmdline.txt
+    - config.txt
+  tags: bluetooth
+
+- user:
+    name: factory
+    groups:
+      - dialout
+      - gpio
+      - i2c
+      - input
+      - plugdev
+      - spi
+      - tty
+      - video
+      - dip
+  tags: users
+
+- name: install rc.local
+  copy:
+    src: rc.local
+    dest: /etc/
