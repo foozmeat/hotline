@@ -9,5 +9,6 @@ make
 ```
 
 ##### References
+* https://buildroot.org/downloads/manual/manual.html
 * https://github.com/enunes/buildroot-external-lima
 * https://stackoverflow.com/questions/48212572/add-a-pypi-python-package-to-buildroot

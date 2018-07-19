@@ -1,12 +1,12 @@
 config BR2_PACKAGE_PYTHON_KIVY
 	bool "python-kivy"
-	#depends on BR2_PACKAGE_HAS_LIBGL
 	depends on BR2_TOOLCHAIN_USES_GLIBC
 	select BR2_PACKAGE_HOST_PYTHON_CYTHON_HOTLINE
 	select BR2_PACKAGE_LIBPNG # runtime
 	select BR2_PACKAGE_MTDEV # runtime
 	select BR2_PACKAGE_PYTHON_DOCUTILS # runtime
 	select BR2_PACKAGE_PYTHON_PYGMENTS # runtime
+	select BR2_PACKAGE_RPI_USERLAND # GL drivers
 	help
 	  A software library for rapid development of
 	  hardware-accelerated multitouch applications.
@@ -15,7 +15,3 @@ config BR2_PACKAGE_PYTHON_KIVY
 
 comment "python-kivy needs a glibc toolchain"
 	depends on !BR2_TOOLCHAIN_USES_GLIBC
-
-#comment "python-kivy needs an OpenGL provider"
-#	depends on BR2_TOOLCHAIN_USES_GLIBC
-#	depends on !BR2_PACKAGE_HAS_LIBGL

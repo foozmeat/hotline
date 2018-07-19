@@ -4,3 +4,5 @@ buildroot/.vagrant
 __pycache__
 /sandbox.py
 /sandbox.kv
+/buildroot/sdcard.img
+.DS_Store
