@@ -1,0 +1,25 @@
+diff --git a/kivy/lib/vidcore_lite/bcm.pxd b/kivy/lib/vidcore_lite/bcm.pxd
+index 61e890ee..a2dcf491 100644
+--- a/kivy/lib/vidcore_lite/bcm.pxd
++++ b/kivy/lib/vidcore_lite/bcm.pxd
+@@ -1,6 +1,6 @@
+ 
+ 
+-cdef extern from "/opt/vc/include/bcm_host.h":
++cdef extern from "bcm_host.h":
+     ctypedef int int32_t
+     ctypedef unsigned short int	uint16_t
+     ctypedef unsigned int		uint32_t
+diff --git a/kivy/lib/vidcore_lite/egl.pyx b/kivy/lib/vidcore_lite/egl.pyx
+index 410b1ac0..16ef421f 100644
+--- a/kivy/lib/vidcore_lite/egl.pyx
++++ b/kivy/lib/vidcore_lite/egl.pyx
+@@ -4,7 +4,7 @@ from bcm cimport DISPMANX_ELEMENT_HANDLE_T, ElementHandle
+ cimport bcm
+ import bcm
+ 
+-cdef extern from "/opt/vc/include/EGL/egl.h":
++cdef extern from "EGL/egl.h":
+     ctypedef int EGLint ###maybe wrong
+     ctypedef unsigned int EGLBoolean
+     ctypedef unsigned int EGLenum
