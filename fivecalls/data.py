@@ -156,9 +156,19 @@ class FiveCallsData(metaclass=Singleton):
 
 
 if __name__ == '__main__':
+
+    from fivecalls.sim8xx_manager import SIM8XXManager
+
+    g = SIM8XXManager()
+    if not g.ppp_up():
+        print("ERROR: Unable to establish PPP connectione")
+        exit(1)
+
     fcd = FiveCallsData()
 
     if fcd.fetch():
         print(f"issues: {len(fcd.issues)}")
         print(f"active issues: {len(fcd.active_issues)}")
         print(f"categories: {len(fcd.categories)}")
+
+    g.ppp_down()

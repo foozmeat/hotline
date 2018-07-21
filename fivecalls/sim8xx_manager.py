@@ -223,13 +223,27 @@ class SIM8XXManager(metaclass=Singleton):
         return ppp_interface.exists()
 
     def ppp_up(self) -> bool:
+
         if self._ppp_is_up():
             return True
+
+        if not self.open():
+            return False
+
         print("Bringing ppp0 up")
         if self.connection:
             self.connection.close()
+
         subprocess.call(['/usr/bin/pon', 'sim8xx'])
-        time.sleep(2)
+        timeout = 0
+
+        while not self._ppp_is_up():
+            time.sleep(1)
+            timeout += 1
+
+            if timeout >= 10:
+                return False
+
         return True
 
     def ppp_down(self) -> bool:

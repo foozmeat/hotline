@@ -70,3 +70,14 @@ Ring    Green  Ground
 Sleeve  Black  Mic
 ```
 
+#### Network Time
+
+Configre the chip to get the time frmo the cell network on next boot
+
+```
+AT+CLTS=1
+AT&W
+```
+
+Read the time with `AT+CCLK?`
+

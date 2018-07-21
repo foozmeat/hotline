@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# Fetch fivecalls data
+#
+
+case "$1" in
+  start)
+    if ! [ -c '/dev/ppp' ]; then mknod /dev/ppp c 108 0; fi
+
+	echo "Starting PPP connection"
+	pon sim8xx
+    cd /opt/hotline
+    python3
+	;;
+  stop)
+	;;
+  restart|reload)
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?
