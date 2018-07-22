@@ -1,3 +1,4 @@
+import socket
 import subprocess
 import sys
 import re
@@ -10,7 +11,6 @@ from fivecalls.singleton import Singleton
 LINUX = False
 if sys.platform == 'linux':
     import RPi.GPIO as GPIO
-
     LINUX = True
 
 
@@ -223,6 +223,10 @@ class SIM8XXManager(metaclass=Singleton):
     #     self.send_cmd_and_wait(f'AT+SAPBR=0,1', 'OK')
 
     def _ppp_is_up(self) -> bool:
+
+        if not LINUX:
+            return True
+
         ppp_interface = Path('/sys/class/net/ppp0')
         return ppp_interface.exists()
 
@@ -251,7 +255,7 @@ class SIM8XXManager(metaclass=Singleton):
         return True
 
     def ppp_down(self) -> bool:
-        if not self._ppp_is_up():
+        if not self._ppp_is_up() or not LINUX:
             return True
 
         print("Tearing ppp0 down")
@@ -285,6 +289,15 @@ class SIM8XXManager(metaclass=Singleton):
     #     # self._close_gprs()
     #
     #     return data
+
+    def has_internet(self, host="9.9.9.9", port=53, timeout=3):
+
+        try:
+            socket.setdefaulttimeout(timeout)
+            socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
+            return True
+        except socket.timeout:
+            return False
 
 
 if __name__ == '__main__':
