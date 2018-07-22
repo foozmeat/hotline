@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 /usr/sbin/chat -f /opt/time/powered_on.chat -t 1 > /dev/ttyAMA0 < /dev/ttyAMA0
 
@@ -9,7 +9,7 @@ if [ $? != 0 ]; then
   echo out > /sys/class/gpio/gpio4/direction
   echo 0 > /sys/class/gpio/gpio4/value
   sleep 1
-  echo 0 > /sys/class/gpio/gpio4/value
+  echo 1 > /sys/class/gpio/gpio4/value
   sleep 3
 
   chat -f /opt/time/powered_on.chat -t 1 > /dev/ttyAMA0 < /dev/ttyAMA0

@@ -21,7 +21,7 @@ class SIM8XXManager(metaclass=Singleton):
 
         self.connection = None
         self.eol = '\r\n'
-        self.port = '/dev/serial0'
+        self.port = '/dev/ttyAMA0'
         self.volume = 0
         self.status = 0
 
@@ -54,6 +54,10 @@ class SIM8XXManager(metaclass=Singleton):
             )
         except serial.serialutil.SerialException:
             raise
+
+        except FileNotFoundError:
+            print(f"{self.port} doesn't exist", file=sys.stderr)
+            exit(1)
 
         else:
             if not self.is_powered_on():

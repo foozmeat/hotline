@@ -1,1 +1,1 @@
-root=/dev/mmcblk0p2 rootwait rootfstype=ext4 quiet
+root=/dev/mmcblk0p2 rootwait rootfstype=ext4
