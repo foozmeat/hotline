@@ -1,0 +1,5 @@
+TIMEOUT 4
+REPORT +CCLK:
+'' AT
+OK AT+CCLK?
++CCLK: ''

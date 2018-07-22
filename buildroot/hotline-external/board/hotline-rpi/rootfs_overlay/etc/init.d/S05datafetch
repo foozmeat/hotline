@@ -10,7 +10,8 @@ case "$1" in
 	echo "Starting PPP connection"
 	pon sim8xx
     cd /opt/hotline
-    python3
+    echo "Fetching data"
+    python3 -m fivecalls.data
 	;;
   stop)
 	;;

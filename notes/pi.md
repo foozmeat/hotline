@@ -54,3 +54,7 @@ local
 ```
   * `pon sim8xx` brings up the interface
   * `poff sim8xx` tears it down
+
+* TFT backlight
+  * `echo 1 > /sys/class/backlight/rpi_backlight/bl_power` # OFF
+  * `echo 0 > /sys/class/backlight/rpi_backlight/bl_power` # ON
