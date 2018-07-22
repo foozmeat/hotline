@@ -46,6 +46,10 @@ class SIM8XXManager(metaclass=Singleton):
         if self.is_open():
             return True
 
+        if not Path(self.port).exists():
+            print(f"{self.port} doesn't exist", file=sys.stderr)
+            exit(1)
+
         try:
             self.connection = serial.Serial(
                     self.port,
@@ -54,10 +58,6 @@ class SIM8XXManager(metaclass=Singleton):
             )
         except serial.serialutil.SerialException:
             raise
-
-        except FileNotFoundError:
-            print(f"{self.port} doesn't exist", file=sys.stderr)
-            exit(1)
 
         else:
             if not self.is_powered_on():
