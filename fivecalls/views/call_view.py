@@ -7,6 +7,7 @@ from kivy.uix.screenmanager import Screen
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.widget import Widget
 
+from fivecalls.call_results import CallResults
 from fivecalls.config import KivyConfig
 from fivecalls.data import Issue
 from fivecalls.sim8xx_manager import SIM8XXManager
@@ -52,8 +53,7 @@ class CallView(Screen):
         self.scrollview.add_widget(self.layout)
         self.add_widget(self.scrollview)
 
-        self.outcome_popup = OutcomePopup(issue=issue)
-        self.outcome_popup.open()
+        self.outcome_popup = OutcomePopup(issue=issue, contact=contact)
 
     def call_button_pressed(self, obj: Widget):
 
@@ -74,6 +74,7 @@ class CallView(Screen):
         if self.phone.status == 0:
             # Call has ended
             self.call_button.set_call()
+            self.outcome_popup.open()
             return False
 
         elif self.phone.status == 2:
@@ -90,18 +91,20 @@ class CallView(Screen):
 
 
 class OutcomePopup(Popup):
-    def __init__(self, issue: Issue = None, **kwargs):
+    def __init__(self, issue: Issue = None, contact=None, **kwargs):
         super().__init__(**kwargs)
         self.issue = issue
+        self.contact = contact
         self.kc = KivyConfig()
 
-        self.title = "Select Outcome"
+        self.title = "What was the outcome of your call?"
         self.title_align = 'center'
         self.size_hint = 0.8, 0.25
         self.background = 'images/modalview-background.png'
         self.title_color = 0, 0, 0, 1
         self.separator_color = 1, 1, 1, 1
         self.title_size = sp(self.kc.font_size)
+        self.auto_dismiss = False
 
         button_layout = GridLayout(cols=2, size_hint_y=None, spacing=[sp(10), sp(10)])
         button_layout.bind(minimum_height=button_layout.setter('height'))
@@ -110,5 +113,12 @@ class OutcomePopup(Popup):
             b = OutcomeButton(
                     text=model['label'].title(),
             )
+            b.bind(on_release=self.button_callback)
             button_layout.add_widget(b)
+
         self.content = button_layout
+
+    def button_callback(self, button):
+        cr = CallResults()
+        cr.new_result(self.issue.id, self.contact['id'], self.contact['phone'], button.text.lower())
+        self.dismiss()

@@ -1,4 +1,7 @@
 from kivy import Config
+
+from fivecalls.call_results import CallResults
+
 Config.set('graphics', 'width', 480)
 Config.set('graphics', 'height', 800)
 
@@ -32,5 +35,6 @@ class FiveCallsApp(App):
 
 
 if __name__ == '__main__':
+    cr = CallResults()
 
     FiveCallsApp().run()
