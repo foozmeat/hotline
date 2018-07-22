@@ -5,7 +5,7 @@
 
 case "$1" in
   start)
-    /bin/bash /opt/time/set_time.sh
+    /opt/time/set_time.sh
 	;;
   stop)
 	;;
