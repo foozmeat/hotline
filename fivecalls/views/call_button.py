@@ -27,6 +27,8 @@ class CallButton(Button):
         with self.canvas.before:
             Color(*color)
             self.rect = RoundedRectangle(
+                    pos=(self.pos[0] + sp(40), self.pos[1]),
+                    size=(self.size[0] - sp(80), self.size[1]),
                     radius=[20]
             )
 
