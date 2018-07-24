@@ -3,3 +3,13 @@ iface lo inet loopback
 
 auto eth0
 iface eth0 inet dhcp
+
+auto wlan0
+iface wlan0 inet dhcp
+    udhcpc_opts -t 10
+    wireless_mode managed
+    wireless_essid any
+    pre-up wpa_supplicant -B -Dnl80211 -iwlan0 -c/etc/wpa_supplicant.conf
+    down killall wpa_supplicant
+#    wait-delay 15
+
