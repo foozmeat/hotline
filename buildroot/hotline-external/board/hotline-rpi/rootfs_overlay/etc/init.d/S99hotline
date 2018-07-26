@@ -8,10 +8,19 @@ case "$1" in
     if ! [ -c '/dev/ppp' ]; then mknod /dev/ppp c 108 0; fi
 
 	echo "Starting PPP connection"
-	pon sim8xx
+	/usr/bin/pon sim8xx
+    sleep 2
+    
+    echo "Setting clock"
+    /usr/bin/ntpdate pool.ntp.org 
+    
     cd /opt/hotline
     echo "Fetching data"
-    python3 -m fivecalls.data
+    /usr/bin/python3 -m fivecalls.data
+    
+    echo "Tearing down PPP"
+    /usr/bin/poff sim8xx
+    
 	;;
   stop)
 	;;

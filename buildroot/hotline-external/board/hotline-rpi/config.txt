@@ -11,3 +11,6 @@ disable_overscan=1
 gpu_mem=256
 
 display_rotate=3
+
+# For the RPi 3
+dtoverlay=pi3-miniuart-bt

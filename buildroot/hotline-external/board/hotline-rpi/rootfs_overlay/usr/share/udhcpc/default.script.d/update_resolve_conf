@@ -1,0 +1,2 @@
+echo "Fixing DNS"
+cp /etc/resolv.conf.static /etc/resolv.conf
