@@ -11,6 +11,7 @@ from fivecalls.singleton import Singleton
 LINUX = False
 if sys.platform == 'linux':
     import RPi.GPIO as GPIO
+
     LINUX = True
 
 
@@ -26,7 +27,8 @@ class SIM8XXManager(metaclass=Singleton):
         self.status = 0
 
         if not LINUX:
-            self.port = '/dev/tty.usbserial'
+            waveshare_hat = 'cu.SLAB_USBtoUART'
+            self.port = f'/dev/{waveshare_hat}'
 
     def toggle_power(self):
 
@@ -68,14 +70,28 @@ class SIM8XXManager(metaclass=Singleton):
                 print(f"Unable to open serial connection")
                 return False
 
+            # self.send_at_cmd('AT+CSCA="wholesale"')  # Select AUX out
+
             # if not LINUX:
-            self.send_at_cmd('AT+CHFA=1')  # Select AUX out
+            self.send_at_cmd('AT+CHFA=0')  # 3.5mm jack
 
             self.send_at_cmd('AT+CMEE=2')  # Enable verbose errors
             self.set_volume(100)
             self.get_volume()
+
             self.get_phone_status()
-            return True
+
+            if self.status == 0:
+                return True
+
+            elif self.status == 2:  # ERROR
+                return False
+
+            elif self.status in [3, 4]:
+                self.hang_up()
+                time.sleep(1)
+
+                return self.get_phone_status() == 0
 
     def is_powered_on(self) -> bool:
         if not self.is_open():
@@ -165,14 +181,14 @@ class SIM8XXManager(metaclass=Singleton):
         r = self.send_at_cmd(cmd)
 
         if 'ERROR' in r:
-            return 0
+            return 2
 
         try:
             _, val = r.split(' ')
 
             return int(val)
         except ValueError:
-            return 0
+            return 2
 
     def get_volume(self):
         self.volume = self._get_numeric_result('AT+CLVL?')
@@ -195,13 +211,29 @@ class SIM8XXManager(metaclass=Singleton):
         tones = ','.join(n_list)
 
         self.send_cmd_and_wait(f'AT+STTONE=1,20,2000', '+STTONE: 0')
-        self.send_at_cmd(f'AT+CLDTMF=1,"{tones}",80')
+        timeBase = 80
+        wait_time = (timeBase * len(tones)) + (timeBase * len(tones) - 1)
 
-        self.send_at_cmd(f"ATD{number};")
+        self.send_at_cmd(f'AT+CLDTMF=1,"{tones}",{timeBase}')
+        time.sleep(wait_time / 1000)
 
-    def get_phone_status(self):
+        result = self.send_at_cmd(f"ATD{number};")
+
+        if 'ERROR' in result:
+            print(result)
+
+    def get_phone_status(self) -> int:
         self.status = self._get_numeric_result('AT+CPAS')
-        print(f"Status: {self.status}")
+
+        statuses = {
+            0: "Ready",
+            2: "Error",
+            3: "Ringing",
+            4: "Call in Progress"
+        }
+
+        print(f"Status: {self.status} {statuses.get(self.status, 'Unknown')}")
+        return self.status
 
     # def _gprs_connected(self) -> bool:
     #     result = self.send_at_cmd('AT+SAPBR=2,1')
@@ -310,7 +342,7 @@ if __name__ == '__main__':
     # g.set_volume(choice(range(0, 100)))
     g.dial_number('5038163008')
     g.get_phone_status()
-    while g.status != 0:
+    while g.status > 2: # Ringing or In Progress
         g.get_phone_status()
         time.sleep(0.5)
 
