@@ -78,8 +78,10 @@ class CallView(Screen):
             return False
 
         elif self.phone.status == 2:
-            self.call_button.set_ringing()
-            return True
+            self.call_button.set_call()
+            return False
+            # self.call_button.set_ringing()
+            # return True
 
         elif self.phone.status == 3:
             self.call_button.set_ringing()
