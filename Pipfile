@@ -5,17 +5,18 @@ name = "pypi"
 
 [packages]
 requests = "*"
-cython = "==0.28.3"
+cython = "==0.29.9"
 #kivy = {file = "https://github.com/kivy/kivy/archive/master.zip"}
-kivy = "==1.11.0"
+kivy = "==1.11.1"
 pyserial = "*"
-'RPi.GPIO'  = {version = "*", sys_platform = "== 'linux'"}
+"RPi.GPIO" = {version = "*",sys_platform = "== 'linux'"}
 cryptography = "*"
 
 [dev-packages]
 mypy = "*"
 pyinstaller = "*"
 ansible = "*"
+pip-check = "*"
 
 [requires]
 python_version = "3.7"
